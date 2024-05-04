@@ -59,7 +59,7 @@ case "$1" in
         ;;
     schedule_wakeup)
         for (( i = 0; i < ${#rig[@]} ; i++ )); do
-            curl -s -s -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" -d '{"control": "poweroff_wake '"$SCHD_TS"'}' https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/control
+            curl -s -s -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" -d '{"control": "poweroff_wake '"${SCHD_TS}"'"}' https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/control
         done
         send_notification "Rigs have been shut at: [ $NOW ], but will be powered back up at [ $SCHD ]"
         ;;
