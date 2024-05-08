@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+# -- mmpOS agent searches for executable bash script mmp-stats.sh in custom miners.
+# -- This is an example content of mmp-stats.sh
+# -- When agent calls mmp-stats.sh it fetches this as an example:
+#{
+#  "busid": [
+#    1
+#  ],
+#  "hash": [
+#    111.0
+#  ],
+#  "units": "hs",
+#  "air": [
+#    "0",
+#    "0",
+#    "0"
+#  ],
+#  "miner_name": "miner-name",
+#  "miner_version": "miner-version"
+#}
+# -- You can see more in https://app.mmpos.eu/faq
+DEVICE_COUNT=$1 # agent calls with device count per platform or globally
+LOG_FILE=$2 # agent provides the path to log file if no json api is available.
+cd `dirname $0`
+. mmp-external.conf # Use this to add name and version if its not provided/ EXTERNAL_NAME && EXTERNAL_VERSION
+
+# -- Sample function to fetch PCI bus ids per vendor.
+get_bus_ids() {
+    local vendor_id="$1"
+    local bus_ids=$(lspci -n | awk '$2 ~ /^0300|0302:/ && $3 ~ /^'"${vendor_id}"':/ {print $1}')
+    local decimal_bus_ids=()
+
+    if [ -z "$bus_ids" ]; then
+        exit 1
+    fi
+
+    while read -r bus_id; do
+        local decimal_bus_id=$((16#${bus_id%%:*}))
+        decimal_bus_ids+=("$decimal_bus_id")
+    done <<< "$bus_ids"
+
+    echo "${decimal_bus_ids[*]}"
+}
+
+# -- Get hashrate per GPU, must be float or integer
+get_cards_hashes() {
+    hash=''
+    for (( i=0; i < ${DEVICE_COUNT}; i++ )); do
+        hash[$i]=''
+        local hs=$(cat "$LOG_FILE" | your-logic-here-to-fetch-hashrate-per-device)
+        hash[$i]=$(echo $hs)
+    done
+}
+
+# -- Get accepted shares.
+get_miner_shares_ac(){
+    ac=0
+    local ac=$(cat "$LOG_FILE" | your-logic-here-to-fetch-accepted-shares)
+    if [[ -z "$ac" ]]; then
+        ac=0
+    fi
+    echo $ac
+}
+
+# -- Get rejected shares.
+get_miner_shares_rj(){
+    rj=0
+    local rj=$(cat "$LOG_FILE" | your-logic-here-to-fetch-rejected-shares)
+    if [[ -z "$rj" ]]; then
+        rj=0
+    fi
+    echo $rj
+}
+
+# -- Get invalid shares.
+get_miner_shares_inv(){
+    inv=0
+    local inv=$(cat "$LOG_FILE" | your-logic-here-to-fetch-invalid-shares)
+    if [[ -z "$inv" ]]; then
+        inv=0
+    fi
+    echo $inv
+}
+
+# -- Publish actual stats:
+get_miner_stats() {
+    stats=
+
+    nv_bus_ids=$(get_bus_ids "10de") # Select nvidia bus ids
+    amd_bus_ids=$(get_bus_ids "1002") # Select AMD bus ids
+
+    if [[ -n "${nv_bus_ids[@]}" ]]; then
+        bus_ids=("${nv_bus_ids[@]}")
+    else
+        bus_ids=("${amd_bus_ids[@]}")
+    fi
+    local busid=("${bus_ids[@]}")
+
+    local hash=
+    get_cards_hashes                        # hashes array
+    local units='hs'                    # hashes units
+    # A/R shares by pool
+    local ac=$(get_miner_shares_ac)
+    local rj=$(get_miner_shares_rj)
+    local inv=$(get_miner_shares_inv)
+
+    stats=$(jq -nc \
+            --argjson hash "$(echo ${hash[@]} | tr " " "\n" | jq -cs '.')" \
+            --argjson busid "$(echo ${busid[@]} | tr " " "\n" | jq -cs '.')" \
+            --arg units "$units" \
+            --arg ac "$ac" --arg inv "$inv" --arg rj "$rj" \
+            --arg miner_version "$EXTERNAL_VERSION" \
+            --arg miner_name "$EXTERNAL_NAME" \
+        '{$busid, $hash, $units, air: [$ac, $inv, $rj], miner_name: $miner_name, miner_version: $miner_version}')
+    # total hashrate in khs
+    echo $stats
+#
+get_miner_stats $DEVICE_COUNT $LOG_FILE
+
