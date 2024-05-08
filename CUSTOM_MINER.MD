@@ -107,6 +107,16 @@ This script is used by `mmp agent` to push stats to `mmp dashboard`.
   "miner_version": "1.0"
 }
 ```
+**Here are some example mmp-stats.sh files:**  
+-	Using logfile parser [mmp-stats.sh](/custom_miner/mmp-stats-logfile.txt)
+-	Using miner api parser [mmp-stats.sh](/custom_miner/mmp-stats-api.txt)
+> Make sure mmp-stats.sh is executable and it contains:  
+```bash
+#!/usr/bin/env bash
+or
+#!/bin/bash
+```
+> header
 
 ## How to pack your custom miner: 
 Must be packed in `tar.gzip` format or meaning `.tar.gz` or `.tgz` inside directory.  
