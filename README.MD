@@ -8,6 +8,8 @@ To start mining Qubic on mmpOS, follow the steps outlined in the [How to mine QU
 
 More guides will follow soon. Feel free to submit PRs with your own guides too.  
 
-## If you wish to spare a few bucks for a cup of tea, feel free to do it on the following wallets:
+## Donation 
+-  Of course the best way to donate is to purchase credits, but if you wish to spare a cup of tea or something.
+-  Below are my QUBIC and XEL wallets:
 -  XEL: xel:hpndx3q0mjravuags50tdhjeslpd97y08w3w7duh3sup39s49susqd27zem  
 -  QUBIC: DDRFSCTOKXREKFAMJXNIFVLWXEFBUKJUAMBEFQRCLGOUOZISWFJMEOVDFVIA
