@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# ----------------------------------------------------------------
+# In memory of Ovalbore
+# The script was intended for him, sadly he didn't live to use it.
+# ----------------------------------------------------------------
 # Fill in the names of your rigs in rigs.txt
 # ex:
 # rig1
