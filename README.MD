@@ -12,6 +12,10 @@ More guides will follow soon. Feel free to submit PRs with your own guides too.
 
 Follow these steps to create and configure your first custom miner: [Custom miners](/CUSTOM_MINER.MD) guide.  
 
+## Make use of mmpOS public API:
+
+You want to automate your solar powered farm? [Click here to learn how](/USE_MMPOS_API.MD).  
+
 ## Donation 
 -  Of course the best way to donate is to purchase credits, but if you wish to spare a cup of tea or something.
 -  Below are my QUBIC and XEL wallets:
