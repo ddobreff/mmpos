@@ -5,7 +5,7 @@ All miners are unarchived in directory `/opt/mmp/miners/custom-$(echo -n "your-d
 
 ##### mmp-external.conf
 This file is considered generic for storing miner name and version.  
-It is used entirely for your information purpose, we do not display anything it contains.
+It is used entirely for your information purpose, we do not display anything it contains.  
 General content:  
 ```bash
 # The name of the miner ex. myfirstminer  
