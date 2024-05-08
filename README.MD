@@ -1,4 +1,4 @@
-# Welcome to the mmpOS Configuration Guides
+# Welcome to mmpOS Configuration Guides
 
 This page is dedicated to providing configuration guides for mmpOS, a mining management platform. mmpOS enables efficient mining operations and monitoring. Visit [mmpOS website](https://app.mmpos.eu/) to learn more about its features and capabilities.
 
