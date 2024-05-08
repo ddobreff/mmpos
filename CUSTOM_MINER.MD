@@ -115,6 +115,8 @@ This script is used by `mmp agent` to push stats to `mmp dashboard`.
 #!/usr/bin/env bash
 or
 #!/bin/bash
+DEVICE_NUM=$1 # -- This indicates the number of devices agent seeks stats for.
+LOG_FILE=$2 # -- This gives the log file provided by agent on call.
 ```
 > header
 
