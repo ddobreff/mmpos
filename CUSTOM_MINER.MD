@@ -1,6 +1,6 @@
 # Custom miner setup for mmpOS
 
-You can make any executable as custom miner in mmpOS.
+You can make any executable as custom miner in mmpOS.  
 All miners are unarchived in directory `/opt/mmp/miners/custom-$(echo -n "your-download-url/miner.tar.gz" | sha256sum | cut -c1-5)`
 
 ##### mmp-external.conf
