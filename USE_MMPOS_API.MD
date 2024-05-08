@@ -5,9 +5,9 @@ You can view current API structure by logging in your account and clicking on yo
 
 ### Sample script to schedule solar powered mining operation:
 [See the script here](/scripts/scheduled_mining.sh)
-> The script was intended to be used by Ovalbore.
-> But, sadly, he didn't have the chance to use it.
-> So I dedicate this solar automation script in his memory.
+> The script was intended to be used by Ovalbore.  
+> But, sadly, he didn't have the chance to use it.  
+> So I dedicate this solar automation script in his memory.  
 
 ### Another user custom solution written in python:
 [Opselite mmpos-python](https://gitlab.com/blockops/python-mmpos)
