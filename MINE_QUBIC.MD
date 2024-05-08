@@ -27,6 +27,7 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 **Sample Configuration for CPUs**
 ![Profile](/imgs/qubicmine-cpu.png)  
 > If you don't add `--trainer` it will automatically choose best.  
+> Use option `--hugepages` as custom placeholder too to setup different hugepages per Rig.  
 
 ```
 --trainer AVX512|AVX2|Generic --provider qubicmine --cpu-threads %custom_cpu_threads%
@@ -51,7 +52,8 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 ### Qubic.li original client configuration:
 **Sample Configuration for CPUs**
 ![Profile](/imgs/qli-cpu.png)  
-> If you don't add `--trainer` it will automatically choose best.  
+> If you don't add `--trainer` it will automatically choose best.
+> Use option `--hugepages` as custom placeholder too to setup different hugepages per Rig.  
 
 ```
 --trainer AVX512|AVX2|Generic --cpu-threads %custom_cpu_threads%
