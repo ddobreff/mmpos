@@ -21,33 +21,7 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 ### Custom placeholder per rig configuration video guide:
 -	[![Click to see video](/movs/8190556357408478139.gif)](/movs/8190556357408478139.mov)  
 
-### Qubicmine.Pro client configuration:
-> The switch from default qubic.li client is `--provider qubicmine`
-
-**Sample Configuration for CPUs**
-![Profile](/imgs/qubicmine-cpu.png)  
-> If you don't add `--trainer` it will automatically choose best.  
-> Use option `--hugepages` as custom placeholder too to setup different hugepages per Rig.  
-
-```
---trainer AVX512|AVX2|Generic --provider qubicmine --cpu-threads %custom_cpu_threads%
-```
-
-**Sample Configuration for AMD GPUs**
-![Profile](/imgs/qubicmine-amd.png)  
-
-```
---trainer AMD --provider qubicmine
-```
-
-**Sample Configuration for NVIDIA GPUs**
-![Profile](/imgs/qubicmine-nvidia.png)  
-
-```
---trainer CUDA12 --provider qubicmine
-```
->![IMPORTANT] Make sure you use `--payoutid` for Qubic.li original client as argument and in wallet too.
->![IMPORTANT] Qubicmine.Pro uses QUBIC ID which is 60 character long WALLET.
+### Qubicmine.Pro client configuration [Guide here](/QUBICMINE_PRO.MD):  
 
 ### Qubic.li original client configuration:
 **Sample Configuration for CPUs**
