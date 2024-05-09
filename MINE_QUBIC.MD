@@ -100,7 +100,7 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 -   **Add pool and select wallet and thats it!**
 >![IMPORTANT] a-pool.io uses their own account ids, please refer to their website for more info `https://www.apool.io/`.
 
-### Usually used GPU overclocks :
+### Usually used NVIDIA overclocks:
 **Moderate**  
 2000 series `Locked core clock: 1385, Smart memory tune: compute-heavy/med, Core offset: 200`  
 3000 series `Locked core clock: 1500, Smart memory tune: compute-heavy/med, Core offset: 250`  
@@ -109,3 +109,15 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 2000 series `Locked core clock: 1500, Smart memory tune: compute-heavy/def, Core offset: 150`  
 3000 series `Locked core clock: 1600, Smart memory tune: compute-heavy/def, Core offset: 200`  
 4000 series `Locked core clock: 2900, Smart memory tune: compute-heavy/def, Core offset: 200`  
+
+### Usually used AMD overclocks:
+
+**Moderate**  
+RDNA series: `Absolute core clock: 1266, Smart memory tune: compute-heavy/def, Voltage: 750-800`  
+RDNA2 series: `Absolute core clock: 1400, Smart memory tune: compute-heavy/def, Voltage: 625-675`  
+RDNA3 series: `Absolute core clock: 2200, Smart memory tune: compute-heavy/def, Voltage offset: -250`  
+**Heavy**  
+RDNA series: `Absolute core clock: 1400, Smart memory tune: compute-heavy/def, Voltage: 800-850`  
+RDNA2 series: `Absolute core clock: 1600, Smart memory tune: compute-heavy/def, Voltage: 700-750`  
+RDNA3 series: `Absolute core clock: 2600, Smart memory tune: compute-heavy/dev, Voltage offset: -300`  
+
