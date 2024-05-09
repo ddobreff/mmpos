@@ -39,7 +39,7 @@ If you have chosen to mine on your CPU, this is how your profile should look lik
 ```
 
 **Sample Configuration for AMD GPUs:**  
-If you have chosen to mine on your CPU, this is how your profile should look like:  
+If you have chosen to mine on your AMD or NVIDIA GPUs, this is how your profile should look like:  
 ![Profile](/imgs/qmine-basic-amd.png)  
 ![Profile](/imgs/qubicmine-amd.png)  
 
