@@ -23,8 +23,14 @@
 ### Qubicmine.Pro client configuration:
 > The switch from default qubic.li client is `--provider qubicmine`
 
-**Sample Configuration for CPUs**
+**Sample Configuration for CPUs:**  
+Add your 60 character QUBIC wallet in wallets, move to pools and add your first pool choosing `QUBIC` as coin.  
+Hostname is irrelevant, so we put mine.qubicmine.pro as dummy one, port is also irrelevant and you can set it to 443.  
+Move to `miner profiles` and click on `Add profile` and name it as you like choosing `QUBIC` as coin and either `qubic-gpu` or `qubic-cpu` as miner.  
+If you have chosen to mine on your CPU, this is how your profile should look like:  
+![Profile](/imgs/qmine-basic-cpu.png)  
 ![Profile](/imgs/qubicmine-cpu.png)  
+> Make sure to select proper pool containing your 60 character wallet.  
 > If you don't add `--trainer` it will automatically choose best.  
 > Use option `--hugepages` as custom placeholder too to setup different hugepages per Rig.  
 
@@ -32,14 +38,17 @@
 --trainer AVX512|AVX2|Generic --provider qubicmine --cpu-threads %custom_cpu_threads%
 ```
 
-**Sample Configuration for AMD GPUs**
+**Sample Configuration for AMD GPUs:**  
+If you have chosen to mine on your CPU, this is how your profile should look like:  
+![Profile](/imgs/qmine-basic-amd.png)  
 ![Profile](/imgs/qubicmine-amd.png)  
 
 ```
 --trainer AMD --provider qubicmine
 ```
 
-**Sample Configuration for NVIDIA GPUs**
+**Sample Configuration for NVIDIA GPUs:**  
+![Profile](/imgs/qmine-basic-nvidia.png)  
 ![Profile](/imgs/qubicmine-nvidia.png)  
 
 ```
@@ -68,4 +77,5 @@ RDNA3 series: `Absolute core clock: 2200, Smart memory tune: compute-heavy/def, 
 RDNA series: `Absolute core clock: 1400, Smart memory tune: compute-heavy/def, Voltage: 800-850`  
 RDNA2 series: `Absolute core clock: 1600, Smart memory tune: compute-heavy/def, Voltage: 700-750`  
 RDNA3 series: `Absolute core clock: 2600, Smart memory tune: compute-heavy/dev, Voltage offset: -300`  
+
 
