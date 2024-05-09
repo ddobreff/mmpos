@@ -21,7 +21,9 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 ### Custom placeholder per rig configuration video guide:
 -	[![Click to see video](/movs/8190556357408478139.gif)](/movs/8190556357408478139.mov)  
 
-### Qubicmine.Pro client configuration [Guide here](/QUBICMINE_PRO.MD):  
+### Qubicmine.Pro client configuration:  
+
+[Guide moved here](/QUBICMINE_PRO.MD)    
 
 ### Qubic.li original client configuration:
 **Sample Configuration for CPUs**
