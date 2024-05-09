@@ -1,4 +1,4 @@
-# How to miner qubic on [Qubicmine.pro](https://qubicmine.pro/get-started)
+# How to mine qubic on [Qubicmine.pro](https://qubicmine.pro/get-started)
 
 
 <br>
