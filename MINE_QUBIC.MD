@@ -48,8 +48,9 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 ```
 --trainer CUDA12
 ```
->![IMPORTANT] Make sure you use `--acccesstoken` for Qubic.li original client as argument and in wallet too.
->![IMPORTANT] Qubic.li usually uses accessToken which is generated on their pool setup - this is not Qubic ID!!!
+>[!IMPORTANT]  
+> Make sure you use `--acccesstoken` for Qubic.li original client as argument and in wallet too.  
+> Qubic.li usually uses accessToken which is generated on their pool setup - this is not Qubic ID!!!  
 
 ### Qubic solutions client configuration:
 **CPU configuration explanation** 
@@ -60,13 +61,16 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 > By default command arguments should be sufficient to run normally.
 
 **AMD GPUs**  
-> ![IMPORTANT]Qubic solutions do not support native AMD miner, but we can use ZLUDA in order to mine on AMD GPUs. Follow instructions below.
+> [!IMPORTANT]  
+> Qubic solutions do not support native AMD miner, but we can use ZLUDA in order to mine on AMD GPUs. Follow instructions below.  
+
 ## :wrench: Custom miner settings
 
 -   **Download profile json from:** [Download JSON](https://github.com/ddobreff/mmpos/releases/download/v0.5.0/qubic-rqiner-zluda.json)
 -   **Click on miner profiles->Import from JSON:** ![Profile](/imgs/import_profile.png)`.
 -   **Add pool and select wallet and thats it!**
->![IMPORTANT] Qubic solutions use QUBIC ID which is 60 character long WALLET.
+>[!IMPORTANT]  
+> Qubic solutions use QUBIC ID which is 60 character long WALLET.  
 
 ### Apoolminer
 ## :wrench: Custom miner settings
@@ -74,7 +78,8 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 -   **Download profile json from:** [Download JSON](https://github.com/ddobreff/mmpos/releases/download/v1.3.2/apoolminer-qubic.json)
 -   **Click on miner profiles->Import from JSON:** ![Profile](/imgs/import_profile.png)`.
 -   **Add pool and select wallet and thats it!**
->![IMPORTANT] a-pool.io uses their own account ids, please refer to their website for more info `https://www.apool.io/`.
+>[!IMPORTANT]  
+> a-pool.io uses their own account ids, please refer to their website for more info `https://www.apool.io/`.  
 
 ### Usually used NVIDIA overclocks:
 **Moderate**  
