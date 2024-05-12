@@ -54,8 +54,9 @@ If you have chosen to mine on your AMD or NVIDIA GPUs, this is how your profile 
 ```
 --trainer CUDA12 --provider qubicmine
 ```
->![IMPORTANT] Make sure you use `--payoutid` for qubicmine.pro client as argument and in wallet too. 
->![IMPORTANT] Qubicmine.Pro uses QUBIC ID which is 60 character long WALLET.  
+>[!IMPORTANT]
+> Make sure you use `--payoutid` for qubicmine.pro client as argument and in wallet too. 
+> Qubicmine.Pro uses QUBIC ID which is 60 character long WALLET.  
 
 ### Usually used NVIDIA overclocks:
 **Moderate**  
