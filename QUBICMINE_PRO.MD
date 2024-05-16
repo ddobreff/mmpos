@@ -35,7 +35,7 @@ If you have chosen to mine on your CPU, this is how your profile should look lik
 > Use option `--hugepages` as custom placeholder too to setup different hugepages per Rig.  
 
 ```
---trainer AVX512|AVX2|Generic --provider qubicmine --cpu-threads %custom_cpu_threads%
+--trainer AVX512|AVX2|Generic --provider qubicmine --cpu-threads $(nproc)
 ```
 
 **Sample Configuration for AMD GPUs:**  
