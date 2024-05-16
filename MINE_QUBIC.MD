@@ -32,7 +32,7 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 > Use option `--hugepages` as custom placeholder too to setup different hugepages per Rig.  
 
 ```
---trainer AVX512|AVX2|Generic --cpu-threads %custom_cpu_threads%
+--trainer AVX512|AVX2|Generic --cpu-threads $(nproc)
 ```
 
 **Sample Configuration for AMD GPUs**
@@ -56,6 +56,7 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 **CPU configuration explanation** 
 > By default our script determines the capabilities of your CPU and chooses the best version for it.
 > Its all built in so you don't need to do anything except set your custom placeholder `%custom_cpu_threads%` as explained in video.
+> If you wish to utilize all CPU threads available use `$(nproc)` as your CPU thread value.  
 
 **NVIDIA GPUs**  
 > By default command arguments should be sufficient to run normally.
