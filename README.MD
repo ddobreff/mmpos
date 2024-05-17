@@ -21,3 +21,5 @@ You want to automate your solar powered farm? [Click here to learn how](/USE_MMP
 -  Below are my QUBIC and XEL wallets:
 -  XEL: xel:hpndx3q0mjravuags50tdhjeslpd97y08w3w7duh3sup39s49susqd27zem  
 -  QUBIC: DDRFSCTOKXREKFAMJXNIFVLWXEFBUKJUAMBEFQRCLGOUOZISWFJMEOVDFVIA
+-  SPR: spectre:qqa8h4c44cz5qfpgng4utaysn3rthwydc7p4eveegy83sj2fu4gpvxmgrmmgw  
+ 
