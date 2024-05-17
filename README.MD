@@ -18,7 +18,7 @@ You want to automate your solar powered farm? [Click here to learn how](/USE_MMP
 
 ## Donation 
 -  Of course the best way to donate is to purchase credits, but if you wish to spare a cup of tea or something.
--  Below are my QUBIC and XEL wallets:
+-  Below are my QUBIC, XEL and SPR wallets:
 -  XEL: xel:hpndx3q0mjravuags50tdhjeslpd97y08w3w7duh3sup39s49susqd27zem  
 -  QUBIC: DDRFSCTOKXREKFAMJXNIFVLWXEFBUKJUAMBEFQRCLGOUOZISWFJMEOVDFVIA
 -  SPR: spectre:qqa8h4c44cz5qfpgng4utaysn3rthwydc7p4eveegy83sj2fu4gpvxmgrmmgw  
