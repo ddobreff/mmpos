@@ -51,19 +51,19 @@ function send_notification() {
 
 rigUUID=()
 for (( i = 0; i <${#rig[@]} ; i++ )); do
-    rigUUID+=( "$(curl -s -X GET  -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/rigs?limit=100 |jq -r '.[] | select(.name == "'"${rig[$i]}"'") | .id')" )
+    rigUUID+=( "$(curl -s -X GET  -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FARMID}/rigs?limit=100 |jq -r '.[] | select(.name == "'"${rig[$i]}"'") | .id')" )
 done
 
 case "$1" in
     poweroff)
         for (( i = 0; i < ${#rig[@]} ; i++ )); do
-            curl -s -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" -d '{"control": "poweroff"}' https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/control
+            curl -s -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" -d '{"control": "poweroff"}' https://api.mmpos.eu/api/v1/${FARMID}/rigs/${rigUUID[$i]}/control
         done
         send_notification "Rigs have been shut at: [ $NOW ]"
         ;;
     schedule_wakeup)
         for (( i = 0; i < ${#rig[@]} ; i++ )); do
-            curl -s -s -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" -d '{"control": "poweroff_wake '"${SCHD_TS}"'"}' https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/control
+            curl -s -s -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" -d '{"control": "poweroff_wake '"${SCHD_TS}"'"}' https://api.mmpos.eu/api/v1/${FARMID}/rigs/${rigUUID[$i]}/control
         done
         send_notification "Rigs have been shut at: [ $NOW ], but will be powered back up at [ $SCHD ]"
         ;;
