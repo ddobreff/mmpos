@@ -5,9 +5,10 @@
 <br>
 
 ## Pool configuration:
-> Go to pools and add you pool using `Add pool` button.  
-> Select the coin supported by Kryptex and fill in `[coin].kryptex.network` followed by pool's port.  
-> Example: `iron.kryptex.network` and port `7777` for nonSSL/TLS or port `8888` for SSL/TLS.  
+> Go to pools and add kryptex pool using `Add pool` button.  
+> Select the coin supported by Kryptex and fill in hostname: `[coin].kryptex.network`.  
+> In port field fill in: `7777` for nonSSL/TLS or `8888` for SSL/TLS.  
+> Example: Hostname: `iron.kryptex.network`, SSL flipped to `ON` and Port: `8888`.  
 
 **Sample screenshot:**  
 ![Pool](/imgs/pool_kryptex_ssl.png)  
