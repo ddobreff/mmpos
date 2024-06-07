@@ -1,7 +1,7 @@
 # How to mine on [KRYPTEX POOLS](https://pool.kryptex.com/)
 
 <br>
-## :warning: We always recommend using latest mmpOS if you experience issues.
+:warning: We always recommend using latest mmpOS if you experience issues.
 <br>
 
 ## Pool configuration:
