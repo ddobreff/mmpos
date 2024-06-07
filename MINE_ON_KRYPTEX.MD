@@ -14,6 +14,6 @@
 
 **Sample screenshot:**  
 ![Pool](/imgs/pool_kryptex_ssl.png)  
-![Profile](/imgs/fron_iron_kryptex.png)  
+![Profile](/imgs/front_iron_kryptex.png)  
 ![Profile](/imgs/lol-kryptex.png)
 
