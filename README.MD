@@ -16,6 +16,10 @@ Follow these steps to create and configure your first custom miner: [Custom mine
 
 You want to automate your solar powered farm? [Click here to learn how](/USE_MMPOS_API.MD).  
 
+## How to mine on Kryptex pools:
+
+You don't know which pool to choose? Start with [Kryptex](/MINE_ON_KRYPTEX.MD).  
+
 ## Donation 
 -  Of course the best way to donate is to purchase credits, but if you wish to spare a cup of tea or something.
 -  Below are my QUBIC, XEL and SPR wallets:
