@@ -117,7 +117,7 @@ cat <<- EOF > /tmp/config.txt
 API_TOKEN="YOUR-API-TOKEN"  # You can get this if you're at least supporter tier from profile.
 FID="YOUR-FARM-ID" # Go to farms on dashboard and copy uuid link of your farm.
 RID="%rig_uuid%" # This is global placeholder!
-PRIMARY_PROFILE="YOUR-PRIMARY-APOOLMINER-PROFILE" # UUID of primary qubic miner.
+PRIMARY_PROFILE="YOUR-PRIMARY-QUBIC-PROFILE" # UUID of primary qubic miner.
 SECONDARY_PROFILE="YOUR-IDLE-PROFILE" # UUID of secondary miner.
 EOF
 ```
