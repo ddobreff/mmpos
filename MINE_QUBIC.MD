@@ -103,3 +103,21 @@ RDNA series: `Absolute core clock: 1400, Smart memory tune: compute-heavy/def, V
 RDNA2 series: `Absolute core clock: 1600, Smart memory tune: compute-heavy/def, Voltage: 700-750`  
 RDNA3 series: `Absolute core clock: 2600, Smart memory tune: compute-heavy/dev, Voltage offset: -300`  
 
+### Due to QUBIC moving for scheduled mining scheme we've implemented a trigger to switch miner profiles on idle. 
+
+## :wrench: `Initiate command prior to miner launch` concept: 
+
+Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`.
+Make sure to export API_TOKEN, and FID(farm id).
+CLI command: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .`
+
+```
+rm -f /tmp/idle_status.txt
+cat <<- EOF > /tmp/config.txt 
+API_TOKEN="YOUR-API-TOKEN"  # You can get this if you're at least supporter tier from profile.
+FID="YOUR-FARM-ID" # Go to farms on dashboard and copy uuid link of your farm.
+RID="%rig_uuid%" # This is global placeholder!
+PRIMARY_PROFILE="YOUR-PRIMARY-APOOLMINER-PROFILE" # UUID of primary qubic miner.
+SECONDARY_PROFILE="YOUR-IDLE-PROFILE" # UUID of secondary miner.
+EOF
+```
