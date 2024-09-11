@@ -105,7 +105,7 @@ RDNA3 series: `Absolute core clock: 2600, Smart memory tune: compute-heavy/dev, 
 
 ### Due to QUBIC moving for scheduled mining scheme we've implemented a trigger to switch miner profiles on idle. 
 
-## :wrench: `Initiate command prior to miner launch` concept: 
+# :wrench: `Initiate command prior to miner launch` concept: 
 
 Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`.
 Make sure to export API_TOKEN, and FID(farm id).
