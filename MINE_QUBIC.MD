@@ -107,9 +107,9 @@ RDNA3 series: `Absolute core clock: 2600, Smart memory tune: compute-heavy/dev, 
 
 ### :wrench: `Initiate command prior to miner launch` concept: 
 
-Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`.
-Make sure to export API_TOKEN, and FID(farm id).
-CLI command: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .`
+Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`. 
+Make sure to export API_TOKEN, and FID(farm id). 
+CLI command: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .` 
 
 ```
 rm -f /tmp/idle_status.txt
