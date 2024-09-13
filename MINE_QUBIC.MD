@@ -117,7 +117,7 @@ CLI command: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: applica
 ```
 SW_CNF_FILE="/tmp/config.txt"
 rm -f /tmp/idle_status.txt
-cat <<- EOF > /tmp/$SW_CNF_FILE 
+cat <<- EOF > $SW_CNF_FILE 
 API_TOKEN="YOUR-API-TOKEN"  # You can get this if you're at least supporter tier from profile.
 FID="YOUR-FARM-ID" # Go to farms on dashboard and copy uuid link of your farm.
 RID="%rig_uuid%" # This is global placeholder!
