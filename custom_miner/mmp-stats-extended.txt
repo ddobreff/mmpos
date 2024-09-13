@@ -1,0 +1,172 @@
+#!/usr/bin/env bash
+# -- This is example of extended mmp-stats.sh script for apool.io miner.
+GPU_COUNT=$1 # Agent sends this variable based on devices.
+LOG_FILE=$2 # Agent sends this variable based on current screen log.
+cd `dirname $0`
+. mmp-external.conf
+# -- curl API settings: default is 5001 --
+MINER_API_PORT=5001 # We have no way currently to set api port on custom miners so workaround to what's default.
+# -- Actual stats json fetching.
+stats_json=$(curl --silent --insecure --header 'Accept: application/json' http://127.0.0.1:${MINER_API_PORT}/gpu)
+# -- Check if miner is running with API or not --
+if [[ $? -ne 0 || -z $stats_json ]]; then
+    echo -e "Miner API connection failed"
+else
+
+    get_cards_busid(){
+        busid=''
+        local bus=$(echo $stats_json |jq '.data.gpus[].bus|tonumber')
+        if [[ -z "$bus" ]]; then
+            local bus="0"
+        fi
+        if [[ ${bus} > 0 ]]; then
+            busid=$(echo $bus)
+        fi
+    }
+
+    get_miner_shares_ac(){
+        local ac=0
+        for ((i=0; i < ${GPU_COUNT}; i++ )); do
+            local ac=$(echo $stats_json | jq '.data.gpus[]| select('.id' == '$i')|.valid')
+            if [[ -z "$ac" ]]; then
+                local ac="0"
+            fi
+            (( total_ac=total_ac+${ac%%.*} ))
+        done
+        echo "$total_ac"
+    }
+
+    get_miner_shares_inv(){
+        local inv=0
+        for ((i=0; i < ${GPU_COUNT}; i++ )); do
+            local inv=$(echo $stats_json | jq '.data.gpus[]| select('.id' == '$i')|.inval')
+            if [[ -z "$inv" ]]; then
+                local inv="0"
+            fi
+            (( total_inv=total_inv+${inv%%.*} ))
+        done
+        echo "$total_inv"
+    }
+
+    get_miner_shares_rj(){
+        local rj=0
+        for ((i=0; i < ${GPU_COUNT}; i++ )); do
+            local rj=$(echo $stats_json | jq '.data.gpus[]| select('.id' == '$i')|.statle')
+            if [[ -z "$rj" ]]; then
+                local rj="0"
+            fi
+            (( total_rj=total_rj+${rj%%.*} ))
+        done
+        echo "$total_rj"
+    }
+
+    get_latest_version() {
+        # Courtesy to Nejib BEN AHMED for doing the initial autoupdate version.
+        TARGET_DIR="."
+        # Use apoolminer official URL
+        URL="https://github.com/apool-io/apoolminer/releases/latest"
+        # Fetch latest version
+        VERSION=$(curl -sL $URL | grep -o '<h1[^>]*>v[0-9]\+\.[0-9]\+\.[0-9]\+' | sed 's/.*>v/v/')
+
+        # If latest version is found and isn't different from the external version, proceed
+        if [ -n "$VERSION" ] && [ "$VERSION" != "v${EXTERNAL_VERSION}" ]; then
+            echo "New version found: $VERSION"
+
+            # Download from my local repo until apool fellows finally add native custom miner.
+            FILE_URL="https://github.com/ddobreff/mmpos/releases/download/$VERSION/apoolminer-$VERSION.tar.gz"
+
+            # Check if the file exists on the server
+            if curl --head --silent --fail "$FILE_URL" > /dev/null; then
+                echo "Downloading $FILE_URL..."
+                curl -L -o "apoolminer-$VERSION.tar.gz" "$FILE_URL" && \
+                    tar --strip-components=1 -xzf "apoolminer-$VERSION.tar.gz" -C "$TARGET_DIR" && \
+                    rm "apoolminer-$VERSION.tar.gz" && \
+                    echo "Files extracted and installed! Restarting mmp-agent service..." && \
+                    /bin/systemctl restart mmp-agent.service
+            else
+                echo "File $FILE_URL does not exist."
+                exit 1  # Exit if the file is not found
+            fi
+        else
+            exit 1
+        fi
+    }
+
+    get_miner_stats() {
+        stats=
+        # Actual data getting
+        local index=$(echo $stats_json |jq '.data.gpus[].id|tonumber')
+        if [[ "$(( $(echo "${index[*]}" | sort -nr | head -n1) + 1 ))" -ne $GPU_COUNT ]]; then
+            GPU_COUNT=$(( $(echo "${index[*]}" | sort -nr | head -n1) + 1 ))
+        fi
+        local busid=
+        get_cards_busid
+        local hash=$(echo $stats_json |jq '.data.gpus[].proof|tonumber')
+        local units='hs'                    # hashes units
+        # A/R shares by pool
+        local ac=$(get_miner_shares_ac)
+        local inv=$(get_miner_shares_inv)
+        local rj=$(get_miner_shares_rj)
+        # make JSON
+        stats=$(jq -nc \
+                --argjson index "$(echo $index| tr " " "\n" | jq -cs '.')" \
+                --argjson hash "$(echo $hash | tr " " "\n" | jq -cs '.')" \
+                --argjson busid "$(echo ${busid[@]} | tr " " "\n" | jq -cs '.')" \
+                --arg units "$units" \
+                --arg ac "$ac" --arg inv "$inv" --arg rj "$rj" \
+                --arg miner_version "$EXTERNAL_VERSION" \
+                --arg miner_name "$EXTERNAL_NAME" \
+            '{$index, $busid, $hash, $units, air: [$ac, $inv, $rj], miner_name: $miner_name, miner_version: $miner_version}')
+        # total hashrate in khs
+        echo $stats
+    }
+fi
+get_miner_stats $GPU_COUNT $LOG_FILE
+# -- Since agent executes this script every 10 seconds, there's no need to crontab it or make loops.
+# -- Simply put whatever dynamic task you want to be executed below and it will get executed.
+# -- Restrain from any echos that may bork the expected json so only use it for debugging purposes.
+# -- BEGIN Customization -- #
+# -- Autoupdate procedure
+get_latest_version
+
+# -- Below is the switching profile procedure until we integrate it natively for QUBIC
+IDLE_SEED="0000000000000000000000000000000000000000000000000000000000000000"
+DEFAULT_SEED="0000000000000000000000000000000000000000000000000000000000000001"
+QUBIC_ACCESSTOKEN="Your-Qubic-AccessToken"
+# Primary check: try official qubic.li rpc api
+GET_SEED=$(curl --fail --insecure -A "Debian APT-HTTP/1.3 (1.6.12)" --silent -L -g -H "Content-Type: application/json" \
+        -X GET "https://mine.qubic.li/Training/RandomSeed" \
+    -H "Authorization: Bearer ${QUBIC_ACCESSTOKEN}" | jq -r .seed)
+
+if [[ -z "$GET_SEED" || "$GET_SEED" == "null" ]]; then
+    # Failover: if qubic.li api fails, go for qubicmine.pro.
+    GET_SEED=$(curl --fail --insecure -A "Debian APT-HTTP/1.3 (1.6.12)" --silent -L -g -H "Content-Type: application/json" \
+        -X GET "https://wss.qubicmine.pro/currentSeed" | jq -r .seed)
+fi
+
+SW_CNF_FILE="/tmp/apool_config.txt"
+SEED_FILE="/tmp/idle_status.txt"
+if [[ -f "$SW_CNF_FILE" ]]; then
+    SEED_RESULT="${GET_SEED:-$IDLE_SEED}"
+else
+    SEED_RESULT="$IDLE_SEED"
+fi
+
+if [[ -f "$SEED_FILE" ]]; then
+    LAST_SEED=$(cat "$SEED_FILE")
+else
+    LAST_SEED="${DEFAULT_SEED}"
+fi
+
+if [[ "$SEED_RESULT" != "$LAST_SEED" ]]; then
+    if [[ "$SEED_RESULT" == "$IDLE_SEED" ]]; then
+        ./switch_profile.sh ${SW_CNF_FILE} inactive > /dev/null 2>&1
+    else
+        ./switch_profile.sh ${SW_CNF_FILE} active > /dev/null 2>&1
+    fi
+
+    echo "$SEED_RESULT" > "$SEED_FILE"
+fi
+
+# -- END Customization -- #
+
