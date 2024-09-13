@@ -52,6 +52,10 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 > Make sure you use `--acccesstoken` for Qubic.li original client as argument and in wallet too.  
 > Qubic.li usually uses accessToken which is generated on their pool setup - this is not Qubic ID!!!  
 
+### Providers using official Qubic client.  
+>Jetski-pool: Use `URL: wps.qubjetski.xyz`, as an addition we've added the option `--socket-url` - `wps.qubjetski.xyz/ws/%rig_name%%miner_id%`.  
+>Minerlab.io: Use URL: `wps.minerlab.io`, as an additon we've added the option `--socket-url` - `wps.minerlab.io/ws/%rig_name%%miner_id%`.  
+
 ### Qubic solutions client configuration:
 **CPU configuration explanation** 
 > By default our script determines the capabilities of your CPU and chooses the best version for it.
@@ -110,10 +114,10 @@ RDNA3 series: `Absolute core clock: 2600, Smart memory tune: compute-heavy/dev, 
 Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`.  
 Make sure to export API_TOKEN, and FID(farm id).  
 CLI command: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .`  
-
 ```
+SW_CNF_FILE="/tmp/config.txt"
 rm -f /tmp/idle_status.txt
-cat <<- EOF > /tmp/config.txt 
+cat <<- EOF > /tmp/$SW_CNF_FILE 
 API_TOKEN="YOUR-API-TOKEN"  # You can get this if you're at least supporter tier from profile.
 FID="YOUR-FARM-ID" # Go to farms on dashboard and copy uuid link of your farm.
 RID="%rig_uuid%" # This is global placeholder!
@@ -121,3 +125,5 @@ PRIMARY_PROFILE="YOUR-PRIMARY-QUBIC-PROFILE" # UUID of primary qubic miner.
 SECONDARY_PROFILE="YOUR-IDLE-PROFILE" # UUID of secondary miner.
 EOF
 ```
+> SW_CNF_FILE for qubic client and qubicmine.pro is /tmp/config.txt, for apoolminer is /tmp/apool_config.txt  
+
