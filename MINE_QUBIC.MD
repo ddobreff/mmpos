@@ -21,9 +21,6 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 ### Custom placeholder per rig configuration video guide:
 -	[![Click to see video](/movs/8190556357408478139.gif)](/movs/8190556357408478139.mov)  
 
-### Qubicmine.Pro client configuration:  
-
-[Guide moved here](/QUBICMINE_PRO.MD)    
 
 ### Qubic.li original client configuration:
 **Sample Configuration for CPUs**
@@ -53,8 +50,10 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 > Qubic.li usually uses accessToken which is generated on their pool setup - this is not Qubic ID!!!  
 
 ### Providers using official Qubic client.  
->Jetski-pool: Use `URL: wps.qubjetski.xyz`, as an addition we've added the option `--socket-url` - `wps.qubjetski.xyz/ws/%rig_name%%miner_id%`.  
->Minerlab.io: Use URL: `wps.minerlab.io`, as an additon we've added the option `--socket-url` - `wps.minerlab.io/ws/%rig_name%%miner_id%`.  
+>Jetski-pool: Use `URL: wps.qubjetski.xyz` and add option `--provider jetski`.  
+>Minerlab.io: Use URL: `wps.minerlab.io` and add option `--provider minerlab`.  
+### Qubicmine.pro.  
+>[Guide moved here](/QUBICMINE_PRO.MD)  
 
 ### Qubic solutions client configuration:
 **CPU configuration explanation** 
