@@ -113,7 +113,17 @@ RDNA3 series: `Absolute core clock: 2600, Smart memory tune: compute-heavy/dev, 
 
 Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`.  
 Make sure to export API_TOKEN, and FID(farm id).  
-CLI command: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .`  
+CLI command:  
+```
+export API_TOKEN=Your-API-Token-from-profiles
+export FID="Use this to fetch IDs: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms |jq -r '.[]|{name: .name, id'}`  
+curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .  
+```
+You can also fetch profiles by coin(QUBIC example, but it can be any supported coin):  
+```
+curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r '.[] | select(.coin == "QUBIC") | {name: .name, id'}
+```
+And in `Initiate command prior to miner launch` add this:  
 ```
 SW_CNF_FILE="/tmp/config.txt"
 rm -f /tmp/idle_status.txt
