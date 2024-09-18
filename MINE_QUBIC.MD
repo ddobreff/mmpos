@@ -116,7 +116,7 @@ Make sure to export API_TOKEN, and FID(farm id).
 CLI command:  
 ```
 export API_TOKEN=Your-API-Token-from-profiles
-export FID="Use this to fetch IDs: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms |jq -r '.[]|{name: .name, id'}`  
+export FID="Use this to fetch IDs: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms |jq -r '.[]|{name: .name, id'}`"  
 curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .  
 ```
 You can also fetch profiles by coin(QUBIC example, but it can be any supported coin):  
