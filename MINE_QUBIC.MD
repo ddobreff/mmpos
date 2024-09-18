@@ -51,7 +51,10 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 
 ### Providers using official Qubic client.  
 >Jetski-pool: Use `URL: wps.qubjetski.xyz` and add option `--provider jetski`.  
+> NOTE: Jetski pool requires your wallet, so make sure you provide it with either options available(--payoutid or --account).  
 >Minerlab.io: Use URL: `wps.minerlab.io` and add option `--provider minerlab`.  
+>NOTE: Minerlab.io is account based, so make sure you provide `--account or --payoutid` option in your miner profile as account id and not wallet.  
+
 ### Qubicmine.pro.  
 >[Guide moved here](/QUBICMINE_PRO.MD)  
 
