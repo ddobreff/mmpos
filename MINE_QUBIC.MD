@@ -118,12 +118,15 @@ Make sure to export API_TOKEN, and FID(farm id).
 CLI command:  
 ```
 export API_TOKEN=Your-API-Token-from-profiles
-export FID="Use this to fetch IDs: `curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms |jq -r '.[]|{name: .name, id'}`"  
-curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .  
+Use this to fetch Farm IDs: `curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms |jq -r '.[]|{name: .name, id'}`"  
+Or if you haven't renamed your farm use this:  
+FID=$(curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms | jq -r '.[] | select(.name == "Default" and .own_access_role == "ROLE_FARM_OWNER") | .id')  
+Then use this to fetch miner profiles limited to 100:  
+curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .  
 ```
 You can also fetch profiles by coin(QUBIC example, but it can be any supported coin):  
 ```
-curl -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r '.[] | select(.coin == "QUBIC") | {name: .name, id'}
+curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r '.[] | select(.coin == "QUBIC") | {name: .name, id'}
 ```
 And in `Initiate command prior to miner launch` add this:  
 ```
