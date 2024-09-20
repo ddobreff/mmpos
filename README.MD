@@ -22,8 +22,8 @@ You don't know which pool to choose? Start with [Kryptex](/MINE_ON_KRYPTEX.MD).
 
 ## Donation 
 -  Of course the best way to donate is to purchase credits, but if you wish to spare a cup of tea or something.
--  Below are my QUBIC, XEL and SPR wallets:
--  XEL: xel:hpndx3q0mjravuags50tdhjeslpd97y08w3w7duh3sup39s49susqd27zem  
+-  Below are my QUBIC, KAS and SPR wallets:
+-  Kaspa(KAS): kaspa:qqe48ufvtanv6t0dn73j2rggf94dzhewxskfl3s67gycppnd874d6fda89eyl
 -  QUBIC: DDRFSCTOKXREKFAMJXNIFVLWXEFBUKJUAMBEFQRCLGOUOZISWFJMEOVDFVIA
--  SPR: spectre:qqa8h4c44cz5qfpgng4utaysn3rthwydc7p4eveegy83sj2fu4gpvxmgrmmgw  
- 
+-  SpectreX(SPR): spectre:qrqzje2p595nhnnsa3ehgsc5eyryv0yhxndf9ctkkc6z787mnuew70xpt5kvt
+
