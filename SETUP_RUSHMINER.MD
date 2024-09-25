@@ -1,6 +1,6 @@
 ## Setting up rushminer FPGA miner on mmpOS:
-
-Official support is TBA anytime soon. There is launcher script that handles options. Here is some basic command line to get the hang of it:  
+Since 25.09.2024 rushminer has been officially integrated as native miner in mmpOS.  
+There is launcher script that handles options. Here is some basic command line to get the hang of it:  
 ```
 --algo gram --pool %pool_server%:%pool_port% --worker %rig_name%%miner_id% --wallet %wallet_address% --device FK33 --device C1100 --device ECU50 \
 	--option "-g -t ECU50 ramp -t 550" --option "-g -t FK33 ramp -t 620" --option "-g -t C1100 ramp -t 400" \
