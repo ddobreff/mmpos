@@ -21,11 +21,14 @@ Since we cannot provide it inside different miner package we try to link it inte
 >       --option "-g -t FK33 ramp -t 620" \
 >       --option "-g -t C1100 ramp -t 400"
 >
+### Set voltage globally:  
+>	--voltage "setvolt -v 600 -t 90 -a --progress 4"  
+>
 ### Set voltage individually per serial or device(You can fetch serials via cli using miner command):    
-*Using device type:*  
+*NEW* Setting voltage by device type:  
 >	--voltage "setvolt -D ECU50,FK33,C1100 -T 600,650,550 -t 90 --progress 4"  
 >
-*Using serial:*  
+*NEW* Setting voltage by serial:  
 >	--voltage "setvolt -d 50241A29CR9T,153300000944,XFL1WCO4STQT -V 600,650,550 -t 90 --progress 4"  
 >
 *Script supports --option that will allow passing additional --ftdi-cmd arguments.*  
