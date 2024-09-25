@@ -16,16 +16,19 @@ On ForestKitten33, U50C(ECU50), Varium C1100, TUL TH53/TH53M/TH55 voltage is con
 Since we cannot provide it inside different miner package we try to link it internally if already installed.  
 
 ## Additional settings:
-# Ramp up individually on-error:
+### Ramp up individually on-error:
 >	--option "--no-block --id=rampFK33 -t FK33 ramp -t 500" \
 >	--option "--no-block --id=rampECU50 -t ECU50 ramp -t 450" \
 >	--option "--no-block --id=rampC1100 -t C1100 ramp -t 400" \
 >	--option "--on-id=rampECU50 --on-id=rampC1100 --on-id=rampFK33 monitor -t 5500 -p 250 -x 1"
-# Set voltage individually per serial or device(You can fetch serials via cli using miner command):    
+>
+### Set voltage individually per serial or device(You can fetch serials via cli using miner command):    
 *Using device type:*  
->	--option "setvolt -D ECU50,FK33,C1100 -T 600,650,550 -t 90 --progress 4"
+>	--option "setvolt -D ECU50,FK33,C1100 -T 600,650,550 -t 90 --progress 4"  
+>
 *Using serial:*  
->	--option "setvolt -d 50241A29CR9T,153300000944,XFL1WCO4STQT -V 600,650,550 -t 90 --progress 4"
+>	--option "setvolt -d 50241A29CR9T,153300000944,XFL1WCO4STQT -V 600,650,550 -t 90 --progress 4"  
+>
 *Script supports --option that will allow passing additional --ftdi-cmd arguments.*  
 *Supported devices currently: FK33, TH53, TH53M, TH55, ECU50, C1100, BCU1525, U200, CVP13 - use with --device option.*
 
