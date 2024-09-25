@@ -16,6 +16,10 @@ Follow these steps to create and configure your first custom miner: [Custom mine
 
 You want to automate your solar powered farm? [Click here to learn how](/USE_MMPOS_API.MD).  
 
+## How to set rushminer using mmpOS:
+
+Recently we've added support for rushminer FPGA miner. [See how to set it up](/SETUP_RUSHMINER.MD).  
+
 ## How to mine on Kryptex pools:
 
 You don't know which pool to choose? Start with [Kryptex](/MINE_ON_KRYPTEX.MD).  
