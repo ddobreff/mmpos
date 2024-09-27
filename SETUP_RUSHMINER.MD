@@ -36,7 +36,10 @@ Since we cannot provide it inside different miner package we try to link it inte
 *NEW* Setting voltage by serial:  
 >	--voltage "setvolt -d 50241A29CR9T,153300000944,XFL1WCO4STQT -V 600,650,550 -t 90 --progress 4"  
 >
-*Supported devices currently: FK33, TH53, TH53M, TH55, ECU50, C1100, BCU1525, U200, CVP13 - use with --device option.*
+*Supported devices currently: FK33, TH53, TH53M, TH55, ECU50, C1100, BCU1525, U200, CVP13 - use with --device option.*  
+*Option `--device <FPGA_DEV>` is reusable and can be supplied as many times as the different devices you have on your rig.*  
+
+
 
 ## Original miner documentation can be found here:  
 [Rushminer](https://github.com/quayd/RushMiner) 
