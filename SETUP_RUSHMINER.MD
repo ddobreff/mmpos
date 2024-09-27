@@ -39,7 +39,15 @@ Since we cannot provide it inside different miner package we try to link it inte
 *Supported devices currently: FK33, TH53, TH53M, TH55, ECU50, C1100, BCU1525, U200, CVP13 - use with --device option.*  
 *Option `--device <FPGA_DEV>` is reusable and can be supplied as many times as the different devices you have on your rig.*  
 
+### Example mmpOS profile export(1 FK33, 2 ECU50, 1 C1100):  
+```
+{"miner_profile":{"name":"GRAM-Rushminer","coin":"TON","os":"linux","commandline":"--algo gram --pool %pool_server%:%pool_port% --worker %rig_name% --wallet %wallet_address% --voltage \"setvolt -D ECU50,FK33,C1100 -T 600,650,600 -t 90 --progress 4\" --device FK33 --device C1100 --device ECU50 --ftdi-cmd=\"monitor -t 5500 -p 200 --unit-count=1\" --ftdi-cmd=\"-g -t ECU50 ramp -t 460\" --ftdi-cmd=\"-g -t FK33 ramp -t 560\" --ftdi-cmd=\"-g -t C1100 ramp -t 400\"","miner":"rushminer.default","miner_version":"latest","api_port":3333,"platforms":[]},"pools":[{"url":"ton.hashrate.to","port":"4002","username":"%wallet_address%.%rig_name%%miner_id%","password":"x","name":"GRAM-icemining","coin":"TON","ssl":false}]}
+```
 
+### Example mmpOS profile export(1 FK33, 1 TH53M):  
+```
+{"miner_profile":{"name":"Rushminer-GRAM","coin":"TON","os":"linux","commandline":"--algo gram --pool %pool_server%:%pool_port% --worker %rig_name%%miner_id% --wallet %wallet_address%  --voltage \"setvolt -v 650 -t 90 -a --progress 4\" --device FK33 --device TH53M --ftdi-cmd=\"monitor -t 5500 -p 200 --unit-count=1\" --ftdi-cmd=\"ramp -t 400\"  --max-clock 600","miner":"rushminer.default","miner_version":"latest","custom_url":"https://update.mmpos.eu/fixes/r/rushminer-v0.2.12-2_mmpos.tar.gz","api_port":3333,"platforms":[]},"pools":[{"url":"fi.ton.hashrate.to","port":"4002","username":"%wallet_address%.%rig_name%%miner_id%","password":"x","name":"gram icemining","coin":"TON","ssl":false}]}
+```
 
 ## Original miner documentation can be found here:  
 [Rushminer](https://github.com/quayd/RushMiner) 
