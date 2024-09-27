@@ -46,7 +46,7 @@ Since we cannot provide it inside different miner package we try to link it inte
 
 ### Example mmpOS profile export(1 FK33, 1 TH53M):  
 ```
-{"miner_profile":{"name":"Rushminer-GRAM","coin":"TON","os":"linux","commandline":"--algo gram --pool %pool_server%:%pool_port% --worker %rig_name%%miner_id% --wallet %wallet_address%  --voltage \"setvolt -v 650 -t 90 -a --progress 4\" --device FK33 --device TH53M --ftdi-cmd=\"monitor -t 5500 -p 200 --unit-count=1\" --ftdi-cmd=\"ramp -t 400\"  --max-clock 600","miner":"rushminer.default","miner_version":"latest","custom_url":"https://update.mmpos.eu/fixes/r/rushminer-v0.2.12-2_mmpos.tar.gz","api_port":3333,"platforms":[]},"pools":[{"url":"fi.ton.hashrate.to","port":"4002","username":"%wallet_address%.%rig_name%%miner_id%","password":"x","name":"gram icemining","coin":"TON","ssl":false}]}
+{"miner_profile":{"name":"Rushminer-GRAM","coin":"TON","os":"linux","commandline":"--algo gram --pool %pool_server%:%pool_port% --worker %rig_name%%miner_id% --wallet %wallet_address%  --voltage \"setvolt -v 650 -t 90 -a --progress 4\" --device FK33 --device TH53M --ftdi-cmd=\"monitor -t 5500 -p 200 --unit-count=1\" --ftdi-cmd=\"ramp -t 400\"  --max-clock 600","miner":"rushminer.default","miner_version":"latest","api_port":3333,"platforms":[]},"pools":[{"url":"fi.ton.hashrate.to","port":"4002","username":"%wallet_address%.%rig_name%%miner_id%","password":"x","name":"gram icemining","coin":"TON","ssl":false}]}
 ```
 
 ## Original miner documentation can be found here:  
