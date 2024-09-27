@@ -48,6 +48,15 @@ Since we cannot provide it inside different miner package we try to link it inte
 ```
 {"miner_profile":{"name":"Rushminer-GRAM","coin":"TON","os":"linux","commandline":"--algo gram --pool %pool_server%:%pool_port% --worker %rig_name%%miner_id% --wallet %wallet_address%  --voltage \"setvolt -v 650 -t 90 -a --progress 4\" --device FK33 --device TH53M --ftdi-cmd=\"monitor -t 5500 -p 200 --unit-count=1\" --ftdi-cmd=\"ramp -t 400\"  --max-clock 600","miner":"rushminer.default","miner_version":"latest","api_port":3333,"platforms":[]},"pools":[{"url":"fi.ton.hashrate.to","port":"4002","username":"%wallet_address%.%rig_name%%miner_id%","password":"x","name":"gram icemining","coin":"TON","ssl":false}]}
 ```
-
+*NOTE* You can always use custom placeholders to set your voltage and clocks per device.  
+Name it `fpga_config` for example and edit the placeholder per rig like that:  
+>	--voltage "setvolt -D ECU50,FK33,C1100 -T 600,650,600 -t 90 --progress 4" \
+>	--device FK33 --device C1100 --device ECU50 \
+>	--ftdi-cmd="monitor -t 5500 -p 200 --unit-count=1" \
+>	--ftdi-cmd="-g -t ECU50 ramp -t 460" \
+>	--ftdi-cmd="-g -t FK33 ramp -t 560" \
+>	--ftdi-cmd="-g -t C1100 ramp -t 400"
+>
+After that in your miner profile as last argument to default arguments add `%custom_fpga_config% and it will be applied per rig.  
 ## Original miner documentation can be found here:  
 [Rushminer](https://github.com/quayd/RushMiner) 
