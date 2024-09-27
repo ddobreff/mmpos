@@ -57,6 +57,6 @@ Name it `fpga_config` for example and edit the placeholder per rig like that:
 >	--ftdi-cmd="-g -t FK33 ramp -t 560" \
 >	--ftdi-cmd="-g -t C1100 ramp -t 400"
 >
-After that in your miner profile as last argument to default arguments add `%custom_fpga_config% and it will be applied per rig.  
+After that in your miner profile as last argument to default arguments add `%custom_fpga_config%` and it will be applied per rig.  
 ## Original miner documentation can be found here:  
 [Rushminer](https://github.com/quayd/RushMiner) 
