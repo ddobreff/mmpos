@@ -1,4 +1,38 @@
 #!/bin/bash
+# -- Use below helper to install switcher on one of your rigs.
+# SWITCH_SCRIPT_URL="https://raw.githubusercontent.com/ddobreff/mmpos/refs/heads/main/scripts/qubic-switch.sh"
+# SWITCH_SCRIPT_PATH="/home/miner/qubic-switch.sh"
+# CONFIG_FILE="/home/miner/config.txt"
+# RIGS_FILE="/home/miner/rigs.txt"
+# CRONTAB_ENTRY="* * * * * $SWITCH_SCRIPT_PATH >/dev/null 2>&1"
+
+# curl --fail --insecure -A "Debian APT-HTTP/1.3 (1.6.12)" -kL -o "$SWITCH_SCRIPT_PATH" "$SWITCH_SCRIPT_URL"
+# chmod +x "$SWITCH_SCRIPT_PATH"
+
+# -- !!! EDIT BELOW !!!
+# cat <<EOL > "$CONFIG_FILE"
+# API_TOKEN="YOUR-API-TOKEN"  # You can get this if you're at least supporter tier from profile.
+# FID="YOUR-FARM-ID" # Go to farms on dashboard and copy uuid link of your farm.
+# PRIMARY_PROFILE="YOUR-PRIMARY-QUBIC-PROFILE" # UUID of primary qubic miner.
+# SECONDARY_PROFILE="YOUR-IDLE-PROFILE" # UUID of secondary miner.
+# CPU_PROFILE="YOUR-CPU-PROFILE" # Add it in case you use cpu profile
+# QUBIC_ACCESSTOKEN="Your qubic.li accesstoken" # This is not your QUBIC WALLET!!!
+# EOL
+#
+# -- !!! PLACE YOUR RIGS WHICH WILL SWITCH TO QUBIC
+# cat <<EOL > "$RIGS_FILE"
+# rig1
+# rig2
+# rig3+cpu # means this rig has cpu profile too
+# rig4+cpu # same as above
+# rig5
+# EOL
+
+# -- Add script to crontab
+# (echo "$CRONTAB_ENTRY"; crontab -l | grep -v "$SWITCH_SCRIPT_PATH") | crontab -
+#
+# -- End helper
+
 CFG_DIR="/home/miner" # Change this if you plan to post config.txt and rigs.txt somewhere else
 SW_CNF_FILE="${CFG_DIR}/config.txt"
 LOCKFILE="${CFG_DIR}/get_seed.lock"
