@@ -142,3 +142,33 @@ EOF
 ```
 > SW_CNF_FILE for qubic client and qubicmine.pro is /tmp/config.txt, for apoolminer is /tmp/apool_config.txt  
 
+### :wrench: Using direct API concept: 
+
+We've added [qubic-switch.sh](/scripts/qubic-switch.sh) script that monitors Qubic SEED and if its idle period it switches to your secondary profile.  
+Also we've added ability to add `+cpu` to your rig names in case you use your CPU to mine other coin or again QUBIC but with CPU.  
+Content is almost the same as with previous method, but we've removed rig UUID from config and added qubic accesstoken for qubic API connection.   
+>config.txt content:
+>
+```
+API_TOKEN="YOUR-API-TOKEN"  # You can get this if you're at least supporter tier from profile.
+FID="YOUR-FARM-ID" # Go to farms on dashboard and copy uuid link of your farm.
+PRIMARY_PROFILE="YOUR-PRIMARY-QUBIC-PROFILE" # UUID of primary qubic miner.
+SECONDARY_PROFILE="YOUR-IDLE-PROFILE" # UUID of secondary miner.
+CPU_PROFILE="YOUR-CPU-PROFILE" # Add it in case you use cpu profile
+QUBIC_ACCESSTOKEN="Your qubic.li accesstoken" # This is not your QUBIC WALLET!!!
+```
+> rigs.txt content:
+>
+```
+rig1
+rig2+cpu
+rig3
+rig4
+```
+These are your rig's names. In this particular example rig2 mines with CPU.  
+Finally add the script to your crontab(use `sudo crontab -e`):
+> * * * * * /home/miner/qubic-switch.sh >/dev/null 2>&1
+>
+Of course you can modify the script to switch only CPU profiles.  
+Feel free to publish changes.   
+
