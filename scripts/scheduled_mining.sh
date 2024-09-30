@@ -57,7 +57,12 @@ done
 case "$1" in
     poweroff)
         for (( i = 0; i < ${#rig[@]} ; i++ )); do
-            curl -s -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" -d '{"control": "poweroff"}' https://api.mmpos.eu/api/v1/${FARMID}/rigs/${rigUUID[$i]}/control
+            RIG_STATUS=$(curl -s -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" "https://api.mmpos.eu/api/v1/${FARMID}/rigs/${rigUUID[$i]}?limit=100" | jq -r .status)
+            if [[ "$RIG_STATUS" != "rig_down" ]]; then
+                curl -s -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" -d '{"control": "poweroff"}' https://api.mmpos.eu/api/v1/${FARMID}/rigs/${rigUUID[$i]}/control
+            else
+                echo "Rig ${rig[$i]} is down, skipping shutdown."
+            fi
         done
         send_notification "Rigs have been shut at: [ $NOW ]"
         ;;
