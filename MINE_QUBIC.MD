@@ -143,7 +143,7 @@ EOF
 > SW_CNF_FILE for qubic client and qubicmine.pro is /tmp/config.txt, for apoolminer is /tmp/apool_config.txt  
 
 ### :wrench: Using direct API concept: 
-
+## Disclaimer! Do the below approach only on one rig or linux. Doesn't have to be set on every rig, just one is enough.  
 We've added [qubic-switch.sh](/scripts/qubic-switch.sh) script that monitors Qubic SEED and if its idle period it switches to your secondary profile.  
 Also we've added ability to add `+cpu` to your rig names in case you use your CPU to mine other coin or again QUBIC but with CPU.  
 Content is almost the same as with previous method, but we've removed rig UUID from config and added qubic accesstoken for qubic API connection.   
