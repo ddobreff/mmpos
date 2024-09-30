@@ -167,7 +167,9 @@ rig4
 ```
 These are your rig's names. In this particular example rig2 mines with CPU.  
 Finally add the script to your crontab(use `sudo crontab -e`):
-> * * * * * /home/miner/qubic-switch.sh >/dev/null 2>&1
+```
+ * * * * * /home/miner/qubic-switch.sh >/dev/null 2>&1
+```
 >
 Of course you can modify the script to switch only CPU profiles.  
 Feel free to publish changes.   
