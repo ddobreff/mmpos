@@ -1,8 +1,8 @@
 #!/bin/bash
 CFG_DIR="/home/miner" # Change this if you plan to post config.txt and rigs.txt somewhere else
 SW_CNF_FILE="${CFG_DIR}/config.txt"
-LOCKFILE="/tmp/get_seed.lock"
-SEED_FILE="/tmp/seed.txt"
+LOCKFILE="${CFG_DIR}/get_seed.lock"
+SEED_FILE="${CFG_DIR}/seed.txt"
 IDLE_SEED="0000000000000000000000000000000000000000000000000000000000000000"
 DEFAULT_SEED="0000000000000000000000000000000000000000000000000000000000000001"
 
@@ -62,30 +62,45 @@ switch_profiles() {
     if [[ "$SEED_RESULT" != "$LAST_SEED" ]]; then
         if [[ "$SEED_RESULT" == "$IDLE_SEED" ]]; then
             for (( i = 0; i < ${#rig[@]} ; i++ )); do
-                if [[ -n "${cpu_profile[$i]}" ]]; then
-                    echo "Switching to inactive profile $SECONDARY_PROFILE + $CPU_PROFILE on RID: ${rigUUID[$i]}"
-                    curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                        -d '{"miner_profiles": ["'"${CPU_PROFILE}"'", "'"${SECONDARY_PROFILE}"'"]}' \
-                        https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                RIG_STATUS=$(curl -s -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                    "https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}?limit=100" | jq -r .status)
+
+                if [[ "$RIG_STATUS" != "rig_down" ]]; then
+                    if [[ -n "${cpu_profile[$i]}" ]]; then
+                        echo "Switching to inactive profile $SECONDARY_PROFILE + $CPU_PROFILE on RID: ${rigUUID[$i]}"
+                        curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                            -d '{"miner_profiles": ["'"${CPU_PROFILE}"'", "'"${SECONDARY_PROFILE}"'"]}' \
+                            https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                    else
+                        echo "Switching to inactive profile $SECONDARY_PROFILE on RID: ${rigUUID[$i]}"
+                        curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                            -d '{"miner_profiles": ["'"${SECONDARY_PROFILE}"'"]}' \
+                            https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                    fi
                 else
-                    echo "Switching to inactive profile $SECONDARY_PROFILE on RID: ${rigUUID[$i]}"
-                    curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                        -d '{"miner_profiles": ["'"${SECONDARY_PROFILE}"'"]}' \
-                        https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                    echo "Rig ${rig[$i]} is down, skipping profile switch."
                 fi
+
             done
         else
             for (( i = 0; i < ${#rig[@]} ; i++ )); do
-                if [[ -n "${cpu_profile[$i]}" ]]; then
-                    echo "Switching to active profile $PRIMARY_PROFILE + $CPU_PROFILE on RID: ${rigUUID[$i]}"
-                    curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                        -d '{"miner_profiles": ["'"${CPU_PROFILE}"'", "'"${PRIMARY_PROFILE}"'"]}' \
-                        https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                RIG_STATUS=$(curl -s -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                    "https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}?limit=100" | jq -r .status)
+
+                if [[ "$RIG_STATUS" != "rig_down" ]]; then
+                    if [[ -n "${cpu_profile[$i]}" ]]; then
+                        echo "Switching to active profile $PRIMARY_PROFILE + $CPU_PROFILE on RID: ${rigUUID[$i]}"
+                        curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                            -d '{"miner_profiles": ["'"${CPU_PROFILE}"'", "'"${PRIMARY_PROFILE}"'"]}' \
+                            https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                    else
+                        echo "Switching to active profile $PRIMARY_PROFILE on RID: ${rigUUID[$i]}"
+                        curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                            -d '{"miner_profiles": ["'"${PRIMARY_PROFILE}"'"]}' \
+                            https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                    fi
                 else
-                    echo "Switching to active profile $PRIMARY_PROFILE on RID: ${rigUUID[$i]}"
-                    curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                        -d '{"miner_profiles": ["'"${PRIMARY_PROFILE}"'"]}' \
-                        https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                    echo "Rig ${rig[$i]} is down, skipping profile switch."
                 fi
             done
         fi
