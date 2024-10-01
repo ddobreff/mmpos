@@ -146,29 +146,34 @@ EOF
 ## Disclaimer! Do the below approach only on one rig or linux. Doesn't have to be set on every rig, just one is enough.  
 We've added [qubic-switch.sh](/scripts/qubic-switch.sh) script that monitors Qubic SEED and if its idle period it switches to your secondary profile.  
 Also we've added ability to add `+cpu` to your rig names in case you use your CPU to mine other coin or again QUBIC but with CPU.  
+In above scenario rigs will switch both to CPU and GPU mining qubic during mining period and will switch to different CPU and GPU profiles on idle period.  
+Introduced CPU mining only if you add `-cpu` to your rig name.   
 Content is almost the same as with previous method, but we've removed rig UUID from config and added qubic accesstoken for qubic API connection.   
+Look inside the script for more information on how to automate the proces.   
 >config.txt content:
 >
 ```
 API_TOKEN="YOUR-API-TOKEN"  # You can get this if you're at least supporter tier from profile.
 FID="YOUR-FARM-ID" # Go to farms on dashboard and copy uuid link of your farm.
-PRIMARY_PROFILE="YOUR-PRIMARY-QUBIC-PROFILE" # UUID of primary qubic miner.
-SECONDARY_PROFILE="YOUR-IDLE-PROFILE" # UUID of secondary miner.
-CPU_PROFILE="YOUR-CPU-PROFILE" # Add it in case you use cpu profile
-QUBIC_ACCESSTOKEN="Your qubic.li accesstoken" # This is not your QUBIC WALLET!!!
+MAIN_CPU_PROFILE="original cpu uuid profile mining during qubic idle"
+MAIN_GPU_PROFILE="original gpu uuid profile mining during qubic idle"
+QUBIC_CPU_PROFILE="qubic cpu profile uuid"
+QUBIC_GPU_PROFILE="qubic gpu profile uuid"
+QUBIC_ACCESSTOKEN="your pool.qubic.li access token"
 ```
 > rigs.txt content:
 >
 ```
 rig1
 rig2+cpu
-rig3
+rig3-cpu
 rig4
 ```
-These are your rig's names. In this particular example rig2 mines with CPU.  
+These are your rig's names. In this particular example rig2 mines with CPU and rig3 is CPU mining only.  
+While rig1 and rig4 are GPU mining only.  
 Finally add the script to your crontab(use `sudo crontab -e`):
 ```
- * * * * * /home/miner/qubic-switch.sh >/dev/null 2>&1
+ * * * * * /home/miner/qubic/qubic-switch.sh >/dev/null 2>&1
 ```
 >
 Of course you can modify the script to switch only CPU profiles.  

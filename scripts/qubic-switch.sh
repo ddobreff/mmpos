@@ -1,9 +1,9 @@
 #!/bin/bash
 # -- Use below helper to install switcher on one of your rigs.
 # SWITCH_SCRIPT_URL="https://raw.githubusercontent.com/ddobreff/mmpos/refs/heads/main/scripts/qubic-switch.sh"
-# SWITCH_SCRIPT_PATH="/home/miner/qubic-switch.sh"
-# CONFIG_FILE="/home/miner/config.txt"
-# RIGS_FILE="/home/miner/rigs.txt"
+# SWITCH_SCRIPT_PATH="/home/miner/qubic/qubic-switch.sh"
+# CONFIG_FILE="/home/miner/qubic/config.txt"
+# RIGS_FILE="/home/miner/qubic/rigs.txt"
 # CRONTAB_ENTRY="* * * * * $SWITCH_SCRIPT_PATH >/dev/null 2>&1"
 
 # curl --fail --insecure -A "Debian APT-HTTP/1.3 (1.6.12)" -kL -o "$SWITCH_SCRIPT_PATH" "$SWITCH_SCRIPT_URL"
@@ -13,18 +13,19 @@
 # cat <<EOL > "$CONFIG_FILE"
 # API_TOKEN="YOUR-API-TOKEN"  # You can get this if you're at least supporter tier from profile.
 # FID="YOUR-FARM-ID" # Go to farms on dashboard and copy uuid link of your farm.
-# PRIMARY_PROFILE="YOUR-PRIMARY-QUBIC-PROFILE" # UUID of primary qubic miner.
-# SECONDARY_PROFILE="YOUR-IDLE-PROFILE" # UUID of secondary miner.
-# CPU_PROFILE="YOUR-CPU-PROFILE" # Add it in case you use cpu profile
+# QUBIC_GPU_PROFILE="YOUR-QUBIC-GPU-PROFILE" # UUID of primary qubic miner.
+# QUBIC_GPU_PROFILE="YOUR-QUBIC-CPU-PROFILE"
+# MAIN_GPU_PROFILE="YOUR-MAIN-GPU-PROFILE" # UUID of secondary miner.
+# MAIN_CPU_PROFILE="YOUR-MAIN-CPU-PROFILE" # Add it in case you use cpu profile
 # QUBIC_ACCESSTOKEN="Your qubic.li accesstoken" # This is not your QUBIC WALLET!!!
 # EOL
 #
 # -- !!! PLACE YOUR RIGS WHICH WILL SWITCH TO QUBIC
 # cat <<EOL > "$RIGS_FILE"
-# rig1
+# rig1 # default without extension means only GPU mining
 # rig2
-# rig3+cpu # means this rig has cpu profile too
-# rig4+cpu # same as above
+# rig3+cpu # means this rig is both CPU and GPU mining only
+# rig4-cpu # means the rig is CPU mining only
 # rig5
 # EOL
 
@@ -33,7 +34,7 @@
 #
 # -- End helper
 
-CFG_DIR="/home/miner" # Change this if you plan to post config.txt and rigs.txt somewhere else
+CFG_DIR="/home/miner/qubic" # Change this if you plan to post config.txt and rigs.txt somewhere else
 SW_CNF_FILE="${CFG_DIR}/config.txt"
 LOCKFILE="${CFG_DIR}/get_seed.lock"
 SEED_FILE="${CFG_DIR}/seed.txt"
@@ -48,15 +49,18 @@ fi
 
 k=0
 rig=()
-cpu_profiles=()
+profile_type=()
 
 while read -r names; do
     if [[ "$names" == *"+cpu" ]]; then
         rig[$k]="${names%+cpu}"
-        cpu_profile[$k]="$CPU_PROFILE"
+        profile_type[$k]="both"
+    elif [[ "$names" == *"-cpu" ]]; then
+        rig[$k]="${names%-cpu}"
+        profile_type[$k]="cpu"
     else
         rig[$k]="$names"
-        cpu_profile[$k]=""
+        profile_type[$k]="gpu"
     fi
     k=$((k + 1))
 done < "${CFG_DIR}/rigs.txt"
@@ -100,15 +104,20 @@ switch_profiles() {
                     "https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}?limit=100" | jq -r .status)
 
                 if [[ "$RIG_STATUS" != "rig_down" ]]; then
-                    if [[ -n "${cpu_profile[$i]}" ]]; then
-                        echo "Switching to inactive profile $SECONDARY_PROFILE + $CPU_PROFILE on RID: ${rigUUID[$i]}"
+                    if [[ "${profile_type[$i]}" == "both" ]]; then
+                        echo "Switching to inactive profile $MAIN_GPU_PROFILE + $MAIN_CPU_PROFILE on Rig ID: ${rigUUID[$i]}"
                         curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                            -d '{"miner_profiles": ["'"${CPU_PROFILE}"'", "'"${SECONDARY_PROFILE}"'"]}' \
+                            -d '{"miner_profiles": ["'"${MAIN_CPU_PROFILE}"'", "'"${MAIN_GPU_PROFILE}"'"]}' \
+                            https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                    elif [[ "${profile_type[$i]}" == "gpu" ]]; then
+                        echo "Switching to inactive profile $MAIN_GPU_PROFILE on Rig ID: ${rigUUID[$i]}"
+                        curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                            -d '{"miner_profiles": ["'"${MAIN_GPU_PROFILE}"'"]}' \
                             https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
                     else
-                        echo "Switching to inactive profile $SECONDARY_PROFILE on RID: ${rigUUID[$i]}"
+                        echo "Switching to inactive profile $MAIN_GPU_PROFILE on Rig ID: ${rigUUID[$i]}"
                         curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                            -d '{"miner_profiles": ["'"${SECONDARY_PROFILE}"'"]}' \
+                            -d '{"miner_profiles": ["'"${MAIN_CPU_PROFILE}"'"]}' \
                             https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
                     fi
                 else
@@ -122,15 +131,20 @@ switch_profiles() {
                     "https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}?limit=100" | jq -r .status)
 
                 if [[ "$RIG_STATUS" != "rig_down" ]]; then
-                    if [[ -n "${cpu_profile[$i]}" ]]; then
-                        echo "Switching to active profile $PRIMARY_PROFILE + $CPU_PROFILE on RID: ${rigUUID[$i]}"
+                    if [[ "${profile_type[$i]}" == "both" ]]; then
+                        echo "Switching to active profile $QUBIC_GPU_PROFILE + $QUBIC_CPU_PROFILE on Rig ID: ${rigUUID[$i]}"
                         curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                            -d '{"miner_profiles": ["'"${CPU_PROFILE}"'", "'"${PRIMARY_PROFILE}"'"]}' \
+                            -d '{"miner_profiles": ["'"${QUBIC_CPU_PROFILE}"'", "'"${QUBIC_GPU_PROFILE}"'"]}' \
+                            https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                    elif [[ "${profile_type[$i]}" == "gpu" ]]; then
+                        echo "Switching to active profile $QUBIC_GPU_PROFILE on Rig ID: ${rigUUID[$i]}"
+                        curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                            -d '{"miner_profiles": ["'"${QUBIC_GPU_PROFILE}"'"]}' \
                             https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
                     else
-                        echo "Switching to active profile $PRIMARY_PROFILE on RID: ${rigUUID[$i]}"
+                        echo "Switching to active profile $QUBIC_GPU_PROFILE on Rig ID: ${rigUUID[$i]}"
                         curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                            -d '{"miner_profiles": ["'"${PRIMARY_PROFILE}"'"]}' \
+                            -d '{"miner_profiles": ["'"${QUBIC_CPU_PROFILE}"'"]}' \
                             https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
                     fi
                 else
