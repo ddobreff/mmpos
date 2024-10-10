@@ -1,7 +1,7 @@
 # Qubic mining on mmpOS
 
 
-Official qubic.li, rqiner and qubicmine.pro clients are included as native miners:
+Official qubic.li and qubicmine.pro clients are included as native miners:
 <br>
 
 ## :warning: For best experience, please use latest mmpOS image. Here are the basic requirements:
@@ -15,7 +15,7 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 <br>
 
 ## GPU driver requirements:
--	Default AMD OpenCL driver is required for mining which currently is 23.20.1 or latest ROCm[6.1.0].
+-	Default AMD OpenCL driver is required for mining which currently is 23.20.1 or latest ROCm[6.2.2].
 -	CUDA 12 capable driver. We recommend going to latest or beta using `mmp nvidia-install latest` or `mmp nvidia-install beta` in CLI.
 
 ### Custom placeholder per rig configuration video guide:
@@ -32,18 +32,11 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 --trainer AVX512|AVX2|Generic --cpu-threads $(nproc)
 ```
 
-**Sample Configuration for AMD GPUs**
-![Profile](/imgs/qli-amd.png)  
-
-```
---trainer AMD
-```
-
 **Sample Configuration for NVIDIA GPUs**
 ![Profile](/imgs/qli-nvidia.png)  
 
 ```
---trainer CUDA12
+--trainer CUDA
 ```
 >[!IMPORTANT]  
 > Make sure you use `--acccesstoken` for Qubic.li original client as argument and in wallet too.  
@@ -55,29 +48,18 @@ Official qubic.li, rqiner and qubicmine.pro clients are included as native miner
 >Minerlab.io: Use URL: `wps.minerlab.io` and add option `--provider minerlab`.  
 >NOTE: Minerlab.io is account based, so make sure you provide `--account or --payoutid` option in your miner profile as account id and not wallet.  
 
-### Qubicmine.pro.  
->[Guide moved here](/QUBICMINE_PRO.MD)  
 
 ### Qubic solutions client configuration:
 **CPU configuration explanation** 
 > By default our script determines the capabilities of your CPU and chooses the best version for it.
 > Its all built in so you don't need to do anything except set your custom placeholder `%custom_cpu_threads%` as explained in video.
-> If you wish to utilize all CPU threads available use `$(nproc)` as your CPU thread value.  
+> If you wish to utilize all CPU threads available use `$(nproc)` as your CPU thread value or skip it as thats default.  
 
 **NVIDIA GPUs**  
 > By default command arguments should be sufficient to run normally.
-
-**AMD GPUs**  
-> [!IMPORTANT]  
-> Qubic solutions do not support native AMD miner, but we can use ZLUDA in order to mine on AMD GPUs. Follow instructions below.  
-
-## :wrench: Custom miner settings
-
--   **Download profile json from:** [Download JSON](https://github.com/ddobreff/mmpos/releases/download/v0.5.0/qubic-rqiner-zluda.json)
--   **Click on miner profiles->Import from JSON:** ![Profile](/imgs/import_profile.png)`.
--   **Add pool and select wallet and thats it!**
->[!IMPORTANT]  
-> Qubic solutions use QUBIC ID which is 60 character long WALLET.  
+**Update**  
+> Since version 3.0 Qubic client has been placed as unified package that can simulatenously mine on your CPU and GPU.  
+> Qubicmine.PRO client has been added as separate miner to reduce updates of both miners.  
 
 ### Apoolminer
 ## :wrench: Custom miner settings
@@ -111,7 +93,8 @@ RDNA3 series: `Absolute core clock: 2600, Smart memory tune: compute-heavy/dev, 
 
 ## Due to QUBIC moving for scheduled mining scheme we've implemented a trigger to switch miner profiles on idle. 
 
-### :wrench: `Initiate command prior to miner launch` concept: 
+## :warning: OBSOLETE METHOD! Use direct API approach if possible!  
+### :wrench: `Initiate command prior to miner launch` concept:  
 
 Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`.  
 Make sure to export API_TOKEN, and FID(farm id).  
@@ -140,10 +123,10 @@ PRIMARY_PROFILE="YOUR-PRIMARY-QUBIC-PROFILE" # UUID of primary qubic miner.
 SECONDARY_PROFILE="YOUR-IDLE-PROFILE" # UUID of secondary miner.
 EOF
 ```
-> SW_CNF_FILE for qubic client and qubicmine.pro is /tmp/config.txt, for apoolminer is /tmp/apool_config.txt  
+> SW_CNF_FILE for qubic client is /tmp/config.txt, for apoolminer is /tmp/apool_config.txt  
 
 ### :wrench: Using direct API concept: 
-## Disclaimer! Do the below approach only on one rig or linux. Doesn't have to be set on every rig, just one is enough.  
+### Disclaimer! Do the below approach only on one rig or linux. Doesn't have to be set on every rig, just one is enough.  
 We've added [qubic-switch.sh](/scripts/qubic-switch.sh) script that monitors Qubic SEED and if its idle period it switches to your secondary profile.  
 Also we've added ability to add `+cpu` to your rig names in case you use your CPU to mine other coin or again QUBIC but with CPU.  
 In above scenario rigs will switch both to CPU and GPU mining qubic during mining period and will switch to different CPU and GPU profiles on idle period.  
