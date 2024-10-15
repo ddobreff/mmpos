@@ -1,0 +1,102 @@
+#!/usr/bin/env bash
+# This file will contain functions related to gathering stats and displaying it for agent
+# For usage with MMP OS agent only. Any redistribution to different system than MMP OS is prihibited!
+# Agent will have to call mmp-stats.sh which will contain triggers for configuration files and etc.
+# Do not edit! If you do, it will be overwritten by next update, so choose static version from dashboard!
+
+FPGA_COUNT=$1
+LOG_FILE=$2
+BASEDIR=$(dirname $0)
+cd ${BASEDIR}
+. mmp-external.conf
+
+# -- Don't touch below
+numSNs=($(cat "$LOG_FILE" | grep -oP 'SN: \K[^ ]+' | sort -u))
+hashes=()
+total_accepted=0
+total_rejected=0
+total_invalid=0
+temps=()
+voltages=()
+sclks=()
+accepted_shares=()
+rejected_shares=()
+invalid_shares=()
+
+for uid in "${numSNs[@]}"; do
+    line=$(grep "SN: $uid" "$LOG_FILE" | tail -n 1)
+
+    hashrate=$(echo "$line" | grep -oP '\(avg\):\K[0-9.]+[GMK]h/s')
+    value=$(echo "$hashrate" | grep -oP '[0-9.]+')
+    unit=$(echo "$hashrate" | grep -oP '[GMK]h/s')
+
+    case "$unit" in
+        "Gh/s")
+            calc_hashrate=$(echo "scale=8; $value * 1000000" | bc)
+            ;;
+        "Mh/s")
+            calc_hashrate=$(echo "scale=8; $value * 1000" | bc)
+            ;;
+        "Kh/s")
+            calc_hashrate=$value
+            ;;
+        *)
+            calc_hashrate="0"
+            ;;
+    esac
+
+    hashes+=("$calc_hashrate")
+
+    acc=$(echo "$line" | grep -oP 'A:\K[0-9]+' || echo "0")
+    rej=$(echo "$line" | grep -oP 'R:\K[0-9]+' || echo "0")
+    inval=$(echo "$line" | grep -oP 'E:\K[0-9]+' || echo "0")
+
+    accepted_shares+=("$acc")
+    rejected_shares+=("$rej")
+    invalid_shares+=("$inval")
+
+    total_accepted=$((total_accepted + acc))
+    total_rejected=$((total_rejected + rej))
+    total_invalid=$((total_invalid + inval))
+
+    sclk=$(echo "$line" | cut -d '|' -f 4 | grep -oP '[0-9.]+')
+    temp=$(echo "$line" | cut -d '|' -f 5 | grep -oP '[0-9.]+')
+    voltage=$(echo "$line" | cut -d '|' -f 6 | grep -oP '[0-9.]+')
+
+    sclks+=("$sclk")
+    temps+=("$temp")
+    voltages+=("$voltage")
+done
+
+shares=$(jq -n \
+        --argjson accepted "$(printf '%s\n' "${accepted_shares[@]}" | jq -R '. | tonumber' | jq -s .)" \
+        --argjson rejected "$(printf '%s\n' "${rejected_shares[@]}" | jq -R '. | tonumber' | jq -s .)" \
+        --argjson invalid "$(printf '%s\n' "${invalid_shares[@]}" | jq -R '. | tonumber' | jq -s .)" \
+    '{accepted: $accepted, rejected: $rejected, invalid: $invalid}')
+
+stats=$(jq -n \
+        --arg miner_name "$EXTERNAL_NAME" \
+        --arg miner_version "$EXTERNAL_VERSION" \
+        --arg units "khs" \
+        --argjson uids "$(printf '%s\n' "${numSNs[@]}" | jq -R . | jq -s .)" \
+        --argjson hash "$(printf '%s\n' "${hashes[@]}" | jq -R . | jq -s .)" \
+        --argjson air "[$total_accepted, $total_invalid, $total_rejected]" \
+        --argjson temp "$(printf '%s\n' "${temps[@]}" | jq -R . | jq -s .)" \
+        --argjson voltage "$(printf '%s\n' "${voltages[@]}" | jq -R . | jq -s .)" \
+        --argjson sclk "$(printf '%s\n' "${sclks[@]}" | jq -R . | jq -s .)" \
+        --argjson shares "$shares" \
+        '{
+      uid: $uids,
+      hash: $hash,
+      units: $units,
+      shares: $shares,
+      air: $air,
+      temp: $temp,
+      voltage: $voltage,
+      sclk: $sclk,
+      miner_name: $miner_name,
+      miner_version: $miner_version
+}')
+
+echo "$stats"
+

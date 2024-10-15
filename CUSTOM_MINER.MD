@@ -140,6 +140,7 @@ Since 10th of October we now support per device share monitoring. Here's additio
 **Here are some example mmp-stats.sh files:**  
 -	Using logfile parser [mmp-stats.sh](/custom_miner/mmp-stats-logfile.txt)
 -	Using miner api parser [mmp-stats.sh](/custom_miner/mmp-stats-api.txt)
+-	Using new format LOG file parser for [Rushminer](https://github.com/quayd/RushMiner): [mmp-stats.sh](/custom_miner/mmp-stats-ext2.txt)
 > Make sure mmp-stats.sh is executable and it contains:  
 ```bash
 #!/usr/bin/env bash
