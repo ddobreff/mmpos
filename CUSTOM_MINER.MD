@@ -108,7 +108,7 @@ This script is used by `mmp agent` to push stats to `mmp dashboard`.
 }
 ```
 Since 10th of October we now support per device share monitoring. Here's additional json data that can be added to current json format:  
-```
+```javascript
   "shares": {
     "accepted": [ // Accepted shares per device(current example is for 6 devices)
       1, // Matches index/bus of first device
