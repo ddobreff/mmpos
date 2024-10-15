@@ -107,6 +107,36 @@ This script is used by `mmp agent` to push stats to `mmp dashboard`.
   "miner_version": "1.0"
 }
 ```
+Since 10th of October we now support per device share monitoring. Here's additional json data that can be added to current json format:  
+```
+  "shares": {
+    "accepted": [ // Accepted shares per device(current example is for 6 devices)
+      1, // Matches index/bus of first device
+      0,
+      0,
+      0,
+      0,
+      1 // Matches index/bus of last device
+    ],
+    "rejected": [ // This will be shown as rejected %
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "invalid": [ // This will display error rate per device on dashboard.
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+```
+*NOTE!*  Currentlu `ar`/`air` is required also to show total shares per hour. So don't forget to include it too.   
 **Here are some example mmp-stats.sh files:**  
 -	Using logfile parser [mmp-stats.sh](/custom_miner/mmp-stats-logfile.txt)
 -	Using miner api parser [mmp-stats.sh](/custom_miner/mmp-stats-api.txt)
