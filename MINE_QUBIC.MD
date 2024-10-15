@@ -80,53 +80,31 @@ Official qubic.li and qubicmine.pro clients are included as native miners:
 3000 series `Locked core clock: 1600, Smart memory tune: compute-heavy/def, Core offset: 200`  
 4000 series `Locked core clock: 2900, Smart memory tune: compute-heavy/def, Core offset: 200`  
 
-### Usually used AMD overclocks:
-
-**Moderate**  
-RDNA series: `Absolute core clock: 1266, Smart memory tune: compute-heavy/def, Voltage: 750-800`  
-RDNA2 series: `Absolute core clock: 1400, Smart memory tune: compute-heavy/def, Voltage: 625-675`  
-RDNA3 series: `Absolute core clock: 2200, Smart memory tune: compute-heavy/def, Voltage offset: -250`  
-**Heavy**  
-RDNA series: `Absolute core clock: 1400, Smart memory tune: compute-heavy/def, Voltage: 800-850`  
-RDNA2 series: `Absolute core clock: 1600, Smart memory tune: compute-heavy/def, Voltage: 700-750`  
-RDNA3 series: `Absolute core clock: 2600, Smart memory tune: compute-heavy/dev, Voltage offset: -300`  
-
 ## Due to QUBIC moving for scheduled mining scheme we've implemented a trigger to switch miner profiles on idle. 
-
-## :warning: OBSOLETE METHOD! Use direct API approach if possible!  
-### :wrench: `Initiate command prior to miner launch` concept:  
-
+### :warning: Disclaimer! Do the below approach only on one mmpOS rig or other linux supporting crontab. Doesn't have to be set on every rig, just one is enough.  
 Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`.  
 Make sure to export API_TOKEN, and FID(farm id).  
 CLI command:  
 ```
 export API_TOKEN=Your-API-Token-from-profiles
-Use this to fetch Farm IDs: `curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms |jq -r '.[]|{name: .name, id'}`"  
-Or if you haven't renamed your farm use this:  
-FID=$(curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms | jq -r '.[] | select(.name == "Default" and .own_access_role == "ROLE_FARM_OWNER") | .id')  
+```
+Use this to fetch Farm IDs:  
+```
+curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms |jq -r '.[]|{name: .name, id'}`"
+```
+Or if you haven't renamed your farm use this(Replace Default if you've renamed your farm differently):  
+```
+FID=$(curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms | jq -r '.[] | select(.name == "Default" and .own_access_role == "ROLE_FARM_OWNER") | .id')
+```
 Then use this to fetch miner profiles limited to 100:  
+```
 curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r .  
 ```
 You can also fetch profiles by coin(QUBIC example, but it can be any supported coin):  
 ```
 curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/${FID}/miner_profiles?limit=100 |jq -r '.[] | select(.coin == "QUBIC") | {name: .name, id'}
 ```
-And in `Initiate command prior to miner launch` add this:  
-```
-SW_CNF_FILE="/tmp/config.txt"
-rm -f /tmp/idle_state.txt
-cat <<- EOF > $SW_CNF_FILE 
-API_TOKEN="YOUR-API-TOKEN"  # You can get this if you're at least supporter tier from profile.
-FID="YOUR-FARM-ID" # Go to farms on dashboard and copy uuid link of your farm.
-RID="%rig_uuid%" # This is global placeholder!
-PRIMARY_PROFILE="YOUR-PRIMARY-QUBIC-PROFILE" # UUID of primary qubic miner.
-SECONDARY_PROFILE="YOUR-IDLE-PROFILE" # UUID of secondary miner.
-EOF
-```
-> SW_CNF_FILE for qubic client is /tmp/config.txt, for apoolminer is /tmp/apool_config.txt  
-
-### :wrench: Using direct API concept: 
-### Disclaimer! Do the below approach only on one rig or linux. Doesn't have to be set on every rig, just one is enough.  
+Final steps:   
 We've added [qubic-switch.sh](/scripts/qubic-switch.sh) script that monitors Qubic SEED and if its idle period it switches to your secondary profile.  
 Also we've added ability to add `+cpu` to your rig names in case you use your CPU to mine other coin or again QUBIC but with CPU.  
 In above scenario rigs will switch both to CPU and GPU mining qubic during mining period and will switch to different CPU and GPU profiles on idle period.  
