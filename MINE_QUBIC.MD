@@ -25,18 +25,18 @@ Official qubic.li and qubicmine.pro clients are included as native miners:
 ### Qubic.li original client configuration:
 **Sample Configuration for CPUs**
 ![Profile](/imgs/qli-cpu.png)  
-> If you don't add `--trainer` it will automatically choose best.
+> If you don't add `--trainer` (*NOTE: in v3.0 option has been renamed to `--cputrainer` or `--gputrainer`*) it will automatically choose best.
 > Use option `--hugepages` as custom placeholder too to setup different hugepages per Rig.  
 
 ```
---trainer AVX512|AVX2|Generic --cpu-threads $(nproc)
+--trainer|--cputrainer AVX512|AVX2|Generic --cpu-threads $(nproc)
 ```
 
 **Sample Configuration for NVIDIA GPUs**
 ![Profile](/imgs/qli-nvidia.png)  
 
 ```
---trainer CUDA
+--trainer|--gputrainer CUDA
 ```
 >[!IMPORTANT]  
 > Make sure you use `--acccesstoken` for Qubic.li original client as argument and in wallet too.  
@@ -81,6 +81,12 @@ Official qubic.li and qubicmine.pro clients are included as native miners:
 4000 series `Locked core clock: 2900, Smart memory tune: compute-heavy/def, Core offset: 200`  
 
 ## Due to QUBIC moving for scheduled mining scheme we've implemented a trigger to switch miner profiles on idle. 
+### Using Qubic client idle commands:
+In version 2.0 options for switching during idle are `--command` and `--arguments`.  
+Example: --command "/opt/mmp/miners/lolmniner-equihash/lolMiner" --arguments "-a AUTOLYKOS2..."  
+3.0 has added two more options that can be used for Pre and Post.  
+Example: --pre|postCommand "ping" --pre|postArguments "google.com"  
+We highly recommend to use our API method below to achieve same result but with better stats and OC control.  
 ### :warning: Disclaimer! Do the below approach only on one mmpOS rig or other linux supporting crontab. Doesn't have to be set on every rig, just one is enough.  
 Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`.  
 Make sure to export API_TOKEN, and FID(farm id).  
