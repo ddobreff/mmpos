@@ -146,7 +146,7 @@ Finally add the script to your crontab(use `sudo crontab -e`):
 # Here is an automated setup to simplify your settings:  
 ```
 mkdir -p qubic && cd qubic;
-wget https://raw.githubusercontent.com/ddobreff/mmpos/refs/heads/main/scripts/qubic-switch.sh -O qubic-switch && chmod +x qubic-switch.sh;
+wget https://raw.githubusercontent.com/ddobreff/mmpos/refs/heads/main/scripts/qubic-switch.sh -O qubic-switch.sh && chmod +x qubic-switch.sh;
 export API_TOKEN=YOUR-API-TOKEN
 FID=$(curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms | jq -r '.[] | select(.name == "Default" and .own_access_role == "ROLE_FARM_OWNER") | .id')
 cat <<- EOF > config.txt
