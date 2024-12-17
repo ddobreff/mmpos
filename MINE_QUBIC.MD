@@ -96,7 +96,7 @@ export API_TOKEN=Your-API-Token-from-profiles
 ```
 Use this to fetch Farm IDs:  
 ```
-curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms |jq -r '.[]|{name: .name, id'}`"
+curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms |jq -r '.[]|{name: .name, id}'
 ```
 Or if you haven't renamed your farm use this(Replace Default if you've renamed your farm differently):  
 ```
