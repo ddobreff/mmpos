@@ -105,10 +105,17 @@ switch_profiles() {
 
                 if [[ "$RIG_STATUS" != "rig_down" ]]; then
                     if [[ "${profile_type[$i]}" == "both" ]]; then
-                        echo "Switching to inactive profile $MAIN_GPU_PROFILE + $MAIN_CPU_PROFILE on Rig ID: ${rigUUID[$i]}"
-                        curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                            -d '{"miner_profiles": ["'"${MAIN_CPU_PROFILE}"'", "'"${MAIN_GPU_PROFILE}"'"]}' \
-                            https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                        if [[ "${MAIN_CPU_PROFILE}" == "${MAIN_GPU_PROFILE}" ]]; then
+                            echo "Switching to inactive profile $MAIN_GPU_PROFILE (same for CPU and GPU) on Rig ID: ${rigUUID[$i]}"
+                            curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                                -d '{"miner_profiles": ["'"${MAIN_GPU_PROFILE}"'"]}' \
+                                https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                        else
+                            echo "Switching to inactive profile $MAIN_GPU_PROFILE + $MAIN_CPU_PROFILE on Rig ID: ${rigUUID[$i]}"
+                            curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                                -d '{"miner_profiles": ["'"${MAIN_CPU_PROFILE}"'", "'"${MAIN_GPU_PROFILE}"'"]}' \
+                                https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                        fi
                     elif [[ "${profile_type[$i]}" == "gpu" ]]; then
                         echo "Switching to inactive profile $MAIN_GPU_PROFILE on Rig ID: ${rigUUID[$i]}"
                         curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
@@ -132,10 +139,17 @@ switch_profiles() {
 
                 if [[ "$RIG_STATUS" != "rig_down" ]]; then
                     if [[ "${profile_type[$i]}" == "both" ]]; then
-                        echo "Switching to active profile $QUBIC_GPU_PROFILE + $QUBIC_CPU_PROFILE on Rig ID: ${rigUUID[$i]}"
-                        curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
-                            -d '{"miner_profiles": ["'"${QUBIC_CPU_PROFILE}"'", "'"${QUBIC_GPU_PROFILE}"'"]}' \
-                            https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                        if [[ "${QUBIC_CPU_PROFILE}" == "${QUBIC_GPU_PROFILE}" ]]; then
+                            echo "Switching to active profile $QUBIC_GPU_PROFILE (same for CPU and GPU) on Rig ID: ${rigUUID[$i]}"
+                            curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                                -d '{"miner_profiles": ["'"${QUBIC_GPU_PROFILE}"'"]}' \
+                                https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                        else
+                            echo "Switching to active profile $QUBIC_GPU_PROFILE + $QUBIC_CPU_PROFILE on Rig ID: ${rigUUID[$i]}"
+                            curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
+                                -d '{"miner_profiles": ["'"${QUBIC_CPU_PROFILE}"'", "'"${QUBIC_GPU_PROFILE}"'"]}' \
+                                https://api.mmpos.eu/api/v1/${FID}/rigs/${rigUUID[$i]}/miner_profiles
+                        fi
                     elif [[ "${profile_type[$i]}" == "gpu" ]]; then
                         echo "Switching to active profile $QUBIC_GPU_PROFILE on Rig ID: ${rigUUID[$i]}"
                         curl -X POST -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" \
