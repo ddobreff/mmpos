@@ -26,7 +26,37 @@ This script is used by `mmp agent` to push stats to `mmp dashboard`.
 -    Hashrate format is either float or integer in argjson as `hash`.
 -    Units can be `hs, khs, mhs, ghs, ths` as `units`
 -    `air` means Accepted, Invalid, Rejected and its in arg format. 
-  
+>
+> How to get PCI Bus id in mmpOS? Call the function below with `get_bus_ids 10de` for NVIDIA or 1002 for AMD, or none for Intel.
+>
+```
+get_bus_ids() {
+    local vendor_id="$1"
+    local gpu_info_json="/run/gpu-info.json"
+    local busids=()
+
+    local vendor
+    vendor_id=$(echo "$vendor_id" | tr -d '[:space:]')
+    case "$vendor_id" in
+        10de) vendor="nvidia" ;;
+        1002) vendor="amd_sysfs" ;;
+        *)    vendor="intel_sysfs" ;;
+    esac
+
+    local bus_ids
+    bus_ids=$(jq -r ".device.GPU.${vendor}_details.busid[]" "$gpu_info_json" 2>/dev/null)
+
+    if [[ -z "$bus_ids" ]]; then
+        exit 1
+    fi
+
+    while read -r bus_id; do
+        local hex=${bus_id:5:2}
+        busids+=($((16#$hex)))
+    done <<< "$bus_ids"
+    echo "${busids[*]}"
+}
+```
 **Example GPU json output:**  
 ```javascript
 {
