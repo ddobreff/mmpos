@@ -3,6 +3,21 @@
 You can make any executable as custom miner in mmpOS.  
 All miners are unarchived in directory `/opt/mmp/miners/custom-$(echo -n "your-download-url/miner.tar.gz" | sha256sum | cut -c1-5)`
 
+## Table of Contents
+1. [mmp-external.conf](#mmp-externalconf)
+2. [mmp-stats.sh](#mmp-statssh)
+    - [How to get PCI Bus id in mmpOS?](#how-to-get-pci-bus-id-in-mmpos)
+    - [Example GPU json output](#example-gpu-json-output)
+    - [Example CPU json output](#example-cpu-json-output)
+    - [Example FPGA json output](#example-fpga-json-output)
+    - [Per device share monitoring](#per-device-share-monitoring)
+    - [Example mmp-stats.sh files](#example-mmp-statssh-files)
+3. [How to pack your custom miner](#how-to-pack-your-custom-miner)
+4. [How to use your custom miner](#how-to-use-your-custom-miner)
+5. [Final step after successful setup of your custom miner](#final-step-after-successful-setup-of-your-custom-miner)
+
+---
+
 ##### mmp-external.conf
 This file is considered generic for storing miner name and version.  
 It is used entirely for your information purpose, we do not display anything it contains.  
@@ -27,7 +42,8 @@ This script is used by `mmp agent` to push stats to `mmp dashboard`.
 -    Units can be `hs, khs, mhs, ghs, ths` as `units`
 -    `air` means Accepted, Invalid, Rejected and its in arg format. 
 >
-> How to get PCI Bus id in mmpOS? Call the function below with `get_bus_ids 10de` for NVIDIA or 1002 for AMD, or none for Intel.
+#### How to get PCI Bus id in mmpOS?  
+Call the function below with `get_bus_ids 10de` for NVIDIA or 1002 for AMD, or none for Intel.
 >
 ```
 get_bus_ids() {
@@ -57,7 +73,7 @@ get_bus_ids() {
     echo "${busids[*]}"
 }
 ```
-**Example GPU json output:**  
+#### Example GPU json output:  
 ```javascript
 {
   "busid": [
@@ -87,7 +103,7 @@ get_bus_ids() {
 }
 ```
 
-**Example CPU json output:**
+#### Example CPU json output:  
 ```javascript
 {
   "busid": [
@@ -108,7 +124,7 @@ get_bus_ids() {
 ```
 > You can mix cpu and gpu hashrate but first you should provide `cpu` as busid followed by GPU busids.  
 
-**Example FPGA json output:**
+#### Example FPGA json output:  
 ```javascript
 {
   "uid": [
@@ -137,6 +153,7 @@ get_bus_ids() {
   "miner_version": "1.0"
 }
 ```
+#### Per device share monitoring:  
 Since 10th of October we now support per device share monitoring. Here's additional json data that can be added to current json format:  
 ```javascript
   "shares": {
@@ -167,7 +184,7 @@ Since 10th of October we now support per device share monitoring. Here's additio
   }
 ```
 *NOTE!*  Currentlu `ar`/`air` is required also to show total shares per hour. So don't forget to include it too.   
-**Here are some example mmp-stats.sh files:**  
+#### Example mmp-stats.sh files:   
 -	Using logfile parser [mmp-stats.sh](/custom_miner/mmp-stats-logfile.txt)
 -	Using miner api parser [mmp-stats.sh](/custom_miner/mmp-stats-api.txt)
 -	Using new format LOG file parser for [Rushminer](https://github.com/quayd/RushMiner): [mmp-stats.sh](/custom_miner/mmp-stats-ext2.txt)
