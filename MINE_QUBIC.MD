@@ -86,6 +86,11 @@ In version 2.0 options for switching during idle are `--command` and `--argument
 Example: --command "/opt/mmp/miners/lolmniner-equihash/lolMiner" --arguments "-a AUTOLYKOS2..."  
 3.0 has added two more options that can be used for Pre and Post.  
 Example: --pre|postCommand "ping" --pre|postArguments "google.com"  
+In version 3.3 new XMR options have been introduced: `--enable-xmr` or `--enable-monero` will enable XMR mining on your CPU directly to qubic client.  
+You can provide monero options by passing `--xmr-opts` or `--monero-opts` "place-your-xmrig-options-here".  
+We have enabled option `--gpus` which allows you to disable certain GPUs from mining.  
+Option is case sensitive, it requires passing all GPUs as either 0 or -1.  
+Example: --gpus "0,-1,0,-1" will disable GPU0 and GPU2, GPU1 and GPU3 will remain enabled.  
 We highly recommend to use our API method below to achieve same result but with better stats and OC control.  
 ### :warning: Disclaimer! Do the below approach only on one mmpOS rig or other linux supporting crontab. Doesn't have to be set on every rig, just one is enough.  
 Fetch all profiles(limit 100) and post them via `Initiate command prior to miner launch`.  
