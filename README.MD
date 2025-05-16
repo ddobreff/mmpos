@@ -2,6 +2,10 @@
 
 This page is dedicated to providing configuration guides for mmpOS, a mining management platform. mmpOS enables efficient mining operations and monitoring. Visit [mmpOS website](https://app.mmpos.eu/) to learn more about its features and capabilities.
 
+## Don't want to spend time installing the OS for simple CPU mining? We got you covered!
+
+To launch and taste mmpOS without modifying your own linux distro follow this [Use mmpOS as docker](/USE_DOCKER.MD) guide.
+
 ## Getting Started with Mining Qubic on mmpOS
 
 To start mining Qubic on mmpOS, follow the steps outlined in the [How to mine QUBIC](/MINE_QUBIC.MD) guide.
@@ -31,4 +35,4 @@ You don't know which pool to choose? Start with [Kryptex](/MINE_ON_KRYPTEX.MD).
 -  QUBIC: MMPSZACXWIQVJAPZORHYKROGFNYAIJLKMSOUIVUNHBAHMCADXLRIYALFCQGM
 -  SpectreX(SPR): spectre:qrqzje2p595nhnnsa3ehgsc5eyryv0yhxndf9ctkkc6z787mnuew70xpt5kvt
 -  ALEO: aleo1y2pkdrdpc2xrjxn3a8xhm4cflj35m8u5levqw4yjd6nwr9l8uygqnk05tg
--  WART: 8dc3e10ec0bbef2d243987e974d099910d1f12dc5455b0a5
+-  WART: 948ec7c6e335bc063a67ba5ccf454599cf56fb0858e1066e
