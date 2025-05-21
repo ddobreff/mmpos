@@ -80,6 +80,19 @@ Official qubic.li and qubicmine.pro clients are included as native miners:
 3000 series `Locked core clock: 1600, Smart memory tune: compute-heavy/def, Core offset: 200`  
 4000 series `Locked core clock: 2900, Smart memory tune: compute-heavy/def, Core offset: 200`  
 
+## :warning: Personal Opinion on the Qubic-Monero PoC: Why the Switcher Is Not Recommended for CPU Miners
+
+> **Disclaimer:** This is my personal perspective on the recent Qubic-Monero Proof of Concept (PoC) changes. It reflects my experience and opinions as a CPU miner.
+
+Recent developments in the Qubic project have led to the implementation of a PoC that leverages CPU miners to mine Monero (XMR) during idle periods. While the explanation provided is complex and wrapped in technical justifications, the underlying mechanism raises serious concerns:  
+
+- CPU miners are now effectively used to mine XMR, which is then **sold for USDT**.
+- The USDT is used to **buy and burn QUBIC tokens**, an action intended to **artificially inflate** QUBIC’s value.
+- This strategy, while sophisticated, feels manipulative and is **in contradiction with the principles of Level 1 (L1) blockchains**.
+- Moreover, it potentially **harms the XMR network**, depending on how large QUBIC’s mining footprint becomes.
+
+As a result of these changes and recent announcements, **my confidence in the Qubic project is eroding**. What started as an innovative endeavor now feels increasingly exploitative, and my experience is turning from hopeful to disillusioned.  
+
 ## Due to QUBIC moving for scheduled mining scheme we've implemented a trigger to switch miner profiles on idle. 
 ### Using Qubic client idle commands:
 In version 2.0 options for switching during idle are `--command` and `--arguments`.  
