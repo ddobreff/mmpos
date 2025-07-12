@@ -168,7 +168,7 @@ wget https://raw.githubusercontent.com/ddobreff/mmpos/refs/heads/main/scripts/qu
 export API_TOKEN=YOUR-API-TOKEN
 FID=$(curl --silent -X GET -H "X-API-Key: ${API_TOKEN}" -H "Content-Type: application/json" https://api.mmpos.eu/api/v1/farms | jq -r '.[] | select(.name == "Default" and .own_access_role == "ROLE_FARM_OWNER") | .id')
 cat <<- EOF > config.txt
-API_TOKEN="REPLACE-THIS-WITH-YOUR-ACTUAL-API-KEY"
+API_TOKEN="$API_TOKEN"
 FID="$FID"
 MAIN_GPU_PROFILE=""
 MAIN_CPU_PROFILE=""
