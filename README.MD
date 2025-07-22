@@ -30,9 +30,7 @@ You don't know which pool to choose? Start with [Kryptex](/MINE_ON_KRYPTEX.MD).
 
 ## Donation 
 -  Of course the best way to donate is to purchase credits, but if you wish to spare a cup of tea or something.
--  Below are my QUBIC, KAS, SPR, ALEO and WART wallets:
+-  Below are my donation wallets:
 -  Kaspa(KAS): kaspa:qqe48ufvtanv6t0dn73j2rggf94dzhewxskfl3s67gycppnd874d6fda89eyl
--  QUBIC: MMPSZACXWIQVJAPZORHYKROGFNYAIJLKMSOUIVUNHBAHMCADXLRIYALFCQGM
--  SpectreX(SPR): spectre:qrqzje2p595nhnnsa3ehgsc5eyryv0yhxndf9ctkkc6z787mnuew70xpt5kvt
--  ALEO: aleo1y2pkdrdpc2xrjxn3a8xhm4cflj35m8u5levqw4yjd6nwr9l8uygqnk05tg
--  WART: 948ec7c6e335bc063a67ba5ccf454599cf56fb0858e1066e
+-  Ethereum(ETH): 0xE1D39706a292a349D719E9f63dB04eB0a6E09c9D
+-  Litecoin(LTC): ltc1qfxum09cw54ggptsl46dwfw9vdysm4vqhmmgdvh
