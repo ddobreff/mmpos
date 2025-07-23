@@ -6,11 +6,13 @@ This page is dedicated to providing configuration guides for mmpOS, a mining man
 
 To launch and taste mmpOS without modifying your own linux distro follow this [Use mmpOS as docker](/USE_DOCKER.MD) guide.
 
-## Getting Started with Mining Qubic on mmpOS
+## Experience the full power of custom placeholders.
 
-To start mining Qubic on mmpOS, follow the steps outlined in the [How to mine QUBIC](/MINE_QUBIC.MD) guide.
+Don't want to mess with lots of miner profiles each with its quirks? We got you covered [Use the power of custom placeholders](/USE_CUSTOM_PLACEHOLDERS.MD).
 
-More guides will follow soon. Feel free to submit PRs with your own guides too.  
+## What is Auto switch per coin?
+
+Want even better automation? Optimize your free time and benefit of [Auto switch)(/USE_AUTOSWITCH.MD) option.
 
 ## Guide on setting up your first custom miner on mmpOS:
 
@@ -27,6 +29,12 @@ Recently we've added support for rushminer FPGA miner. [See how to set it up](/S
 ## How to mine on Kryptex pools:
 
 You don't know which pool to choose? Start with [Kryptex](/MINE_ON_KRYPTEX.MD).  
+
+## Getting Started with Mining Qubic on mmpOS
+
+To start mining Qubic on mmpOS, follow the steps outlined in the [How to mine QUBIC](/MINE_QUBIC.MD) guide.
+
+More guides will follow soon. Feel free to submit PRs with your own guides too.
 
 ## Donation 
 -  Of course the best way to donate is to purchase credits, but if you wish to spare a cup of tea or something.
