@@ -12,7 +12,7 @@ Don't want to mess with lots of miner profiles each with its quirks? We got you 
 
 ## What is Auto switch per coin?
 
-Want even better automation? Optimize your free time and benefit of [Auto switch)(/USE_AUTOSWITCH.MD) option.
+Want even better automation? Optimize your free time and benefit of [Auto switch](/USE_AUTOSWITCH.MD) option.
 
 ## Guide on setting up your first custom miner on mmpOS:
 
