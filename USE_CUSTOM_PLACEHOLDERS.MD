@@ -78,7 +78,7 @@ Custom placeholders are user-defined values that can be injected into command-li
 2. **Edit** the Miner Profile:
    - Go to **Advanced**, and append `%custom_myplaceholder%` at the end of the miner arguments.
 3. **Per-Rig Override**:
-   - Go to **Rigs** → select rig → click ⚙️ **Rig Config**.
+   - Go to **Rigs** → select rig → click ![Rig Config](https://img.icons8.com/fluency/24/maintenance.png) **Rig Config**.
    - Navigate to **Placeholders** → **Custom Placeholders**.
    - Assign a value like `-d 0`.
 
