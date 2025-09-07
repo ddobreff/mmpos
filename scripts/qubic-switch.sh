@@ -34,6 +34,19 @@
 #
 # -- End helper
 
+# -- Official Accesstokens for 3rd party pools.
+# Nevermine.io token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6IjY3ZTc4NGQ1LWM3MzAtNGE3My1hOThhLTE2NGExOTc3MDY5MCIsIk1pbmluZyI6IiIsIm5iZiI6MTc0NjI4MzI3OSwiZXhwIjoxNzc3ODE5Mjc5LCJpYXQiOjE3NDYyODMyNzksImlzcyI6Imh0dHBzOi8vcXViaWMubGkvIiwiYXVkIjoiaHR0cHM6Ly9xdWJpYy5saS8ifQ.ao7Jns9uVqAxEZesZJs9p7Jh42Y60qADoO-frzT-TRsYt1Q6srAX4hcaSonEcdPEIQfmDAPk4iYE-yxb9ks_dp3N-90UqZV9zVOcUjhssW9ljXMmiIo4RCh9MAtd44wfo-98IHcdPtUp5s4-rOTt-St018sopRrByWOYGVRKavemdZ0uscNgV_bTMr1Q7w330OmDlwW13mJMCwUcf6Qxn6VqFXP9me3uTe7Kii_hlWaJ2vBcqzxbxqpglDeVVbEMJS8vC7htxyGb42uT-v8V7SqmPar2uYIpK6tr4Tq6-1_u2Urt2jky-raFqn7CajCyooBaTegkylnrnFXxswuN2Q
+# JETSKI PPLNS token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImZiZDRlODYyLTkxZWEtNDM1NS04YzFlLTA5Y2M2MmQwNjA2MiIsIk1pbmluZyI6IiIsIm5iZiI6MTcyNjc1NTQxNSwiZXhwIjoxNzU4MjkxNDE1LCJpYXQiOjE3MjY3NTU0MTUsImlzcyI6Imh0dHBzOi8vcXViaWMubGkvIiwiYXVkIjoiaHR0cHM6Ly9xdWJpYy5saS8ifQ.Sl6QKkMeOCK4clB-JnWhai2K1QS0dLxKWfUyTdty39ZcxaR0uCURUhbUmVoTKV_nvVdVunDiqz6Y6Egp0KbENoFYJUSa_Pd83a5Fm5L0lR-9DpaMbYXUHoqdjaZbU-NLJlD4gV1xNPyipmejJerrY7LgBtxk7gNTS0CY_GBb0SbiN4RL-KaTJaFTG31Kno858Oe5MT6JW8CADnhvMhkdewQYuRNsWg6ALrB_OzPMF04IBI0IqdsekvTh5ISe10e60cr0l9hWaYC7v6XFX76cvvnfATU8Ak92YFrgRQJvJ307ju0B-A7syUPNA1BdRo-lojRjshMJvxa_ubrMXo8V8g
+# Minerlab.io PPLNS token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6ImQzNzMyODc2LTY5ZDctNGI1OC1hNmUzLWM2MzZkMGQ4ZDE0NiIsIk1pbmluZyI6IiIsIm5iZiI6MTcyNTM3NjkyOSwiZXhwIjoxNzU2OTEyOTI5LCJpYXQiOjE3MjUzNzY5MjksImlzcyI6Imh0dHBzOi8vcXViaWMubGkvIiwiYXVkIjoiaHR0cHM6Ly9xdWJpYy5saS8ifQ.sregOyk2PEyXv8ssdQDBtTps1JFBLghcJCzDFvaD6hWoVA_T-crfQZbiV0E_atqd6sxNHYKGmeVCOoU9crLU4mnojZdF1vyp3VttB3ZIqo3qIgr0R4jWnwZ95bGN1c6NE3zb9y7ZWor5-4ttLkR_5moxiZZvaKG2WWSxFJ-7kk6SVSw7z8iaYyVpPX1Tdu6pBWxDStYYaoVvgNzx6RShU_r2AVCB1JGfv16vKvAIGmPcluvS-ayKwfgOpY1uEbsH6Lswd_KGbB1aJC7g8AI1CUoYiUUl_CJUBZfG0FbBgtGDRhfPUcYM5z8BEyIrm6bfKhMHuJmIF86NJYydRUHgow
+# Qubic solutions PPLNS token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJJZCI6Ijc2ZDM5MjllLTI3ZmItNGRjNC04MzNkLTQyNmJkYzFlOGI5NSIsIk1pbmluZyI6IiIsIm5iZiI6MTczODgwNzE1OCwiZXhwIjoxNzcwMzQzMTU4LCJpYXQiOjE3Mzg4MDcxNTgsImlzcyI6Imh0dHBzOi8vcXViaWMubGkvIiwiYXVkIjoiaHR0cHM6Ly9xdWJpYy5saS8ifQ.snRGOlvID_LQ32tj75yd-bgkBbfCWLgM0CkNvZIjxp2jRemg2LvTGyc_ExQje3Iu_PCxLQCKjgmUPjoVt0NRZX1S1G13SNLWhyetzu1Dgu6QeO30hNdD7V06mcs13uRuMYfuD1BWLLXnXMShRUQQSWJSh6jFllPjwzW9RwycKncZ5VV7B1tr1__hES_dEnajTSBTcTIbNWgfXZGuzMvC6Re-Xvtf7DtFY17wDVQay52Q58SrflqSQ3LEmtGtZPLz0Pcj0F3fVCdQ6CzvbOov28TRG_CGv9ybFSm2WOfyY3L6h1jJRN9NtwN0I3QHIJuEoarKAB61vLqo62GLbQQFig
+# -- End 3rd party accessTokens.
+# -- Usage --
+# In order to use 3rd party pool with official qubic.li miner you have to setup pool address first.
+# Nevermine.io pool address: qubic.nevermine.io / Uses wallet address.
+# Jetski PPLNS: pplnsjetski.xyz / Uses wallet address.
+# Minerlab.io PPLNS: pps.minerlab.io / Uses account as username, not wallet .
+# Qubic solutions PPLNS: pps.qubic.solutions / Uses wallet address.
+# -- End usage
 CFG_DIR="/home/miner/qubic" # Change this if you plan to post config.txt and rigs.txt somewhere else
 SW_CNF_FILE="${CFG_DIR}/config.txt"
 LOCKFILE="${CFG_DIR}/get_seed.lock"
@@ -82,12 +95,6 @@ switch_profiles() {
     GET_SEED=$(curl --fail --insecure -A "Debian APT-HTTP/1.3 (1.6.12)" --silent -L -g -H "Content-Type: application/json" \
             -X GET "https://mine.qubic.li/Training/RandomSeed" \
         -H "Authorization: Bearer ${QUBIC_ACCESSTOKEN}" | jq -r .seed)
-
-    if [[ -z "$GET_SEED" || "$GET_SEED" == "null" ]]; then
-        # Failover: if qubic.li api fails, go for qubicmine.pro.
-        GET_SEED=$(curl --fail --insecure -A "Debian APT-HTTP/1.3 (1.6.12)" --silent -L -g -H "Content-Type: application/json" \
-            -X GET "https://wss.qubicmine.pro/currentSeed" | jq -r .seed)
-    fi
 
     SEED_RESULT="${GET_SEED:-$IDLE_SEED}"
 
