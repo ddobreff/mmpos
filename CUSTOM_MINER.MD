@@ -238,6 +238,27 @@ LOG_FILE=$2 # -- This gives the log file provided by agent on call.
 ```
 > header
 
+## How to integrate your own miner into mmpOS as built-in?
+
+In agent v4.0.18 we've added http json endpoint `/mmpos` with miner-script json like parsing capabilities.
+The difference is that you don't need `mmp-stats.sh` here(unless its still custom miner), because agent will call http://host:port/mmpos directly and expect the same as mmp-stats.sh output.
+With this added you can contact us and we can speed add your miner as built-in miner.
+You can also omit using jq as custom miner by adding `mmp-stats.sh` with this content:
+```
+DEVICE_COUNT=$1 
+LOG_FILE=$2 
+
+
+MINER_API_PORT=YOUR-DEFAULT-API-PORT
+stats_json=$(curl --silent --insecure --header 'Accept: application/json' http://127.0.0.1:${MINER_API_PORT}/mmpos)
+
+if [[ $? -ne 0 || -z $stats_json ]]; then
+    echo -e "Miner API connection failed"
+else
+    echo $stats_json
+fi
+``` 
+
 ## How to pack your custom miner: 
 Must be packed in `tar.gzip` format or meaning `.tar.gz` or `.tgz` inside directory.  
 Name of the directory is not relevant because our agent already renames it to `custom-$(echo -n "your-download-url/miner.tar.gz" | sha256sum | cut -c1-5)`  
