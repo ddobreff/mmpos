@@ -29,9 +29,9 @@ Initial miner launcher script with default arguments supplied by our UI for simp
 -    `--api-port`: matches API PORT config variable if miner has support for api, or else just ignores it.
 
 **Disclaimer!!!**  
--       If your miner supports `--algo` or `--coin` parameter, make sure to pass default in `mmp-launch.sh` because by default we don't provide algo option, you can of course map it for further usage.
--       Each additional argument should be passed ASIS for futher usage.
--       Example [mmp-launch.sh](/custom_miner/mmp-launch.txt)
+-	If your miner supports `--algo` or `--coin` parameter, make sure to pass default in `mmp-launch.sh` because by default we don't provide algo option, you can of course map it for further usage.
+-	Each additional argument should be passed ASIS for futher usage.
+-	Example: [mmp-launch.sh](/custom_miner/mmp-launch.txt)
 ##### mmp-external.conf
 This file is considered generic for storing miner name and version.  
 It is used entirely for your information purpose, we do not display anything it contains.  
