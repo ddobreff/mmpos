@@ -23,9 +23,9 @@ All miners are unarchived in directory `/opt/mmp/miners/custom-$(echo -n "your-d
 Initial miner launcher script with default arguments supplied by our UI for simplicity on first boot. 
 
 #### Default arguments of mmp-launch.sh
--    `--pool`: matches %pool_server%:%pool_port% of stratum pool, doesn't include stratum+tcp|stratum+ssl - make sure to map those internally in launch script.
--    `--user`: matches %user% placeholder that contains by default %wallet_address%.%rig_name%%miner_id% or simple wallet.worker format.
--    `--password`: matches %password% field, by default its x.
+-    `--pool`: matches `%pool_server%:%pool_port%` of stratum pool, doesn't include `stratum+tcp|stratum+ssl` - make sure to map those internally in launch script.
+-    `--user`: matches `%user%` placeholder that contains by default `%wallet_address%.%rig_name%%miner_id%` or simple wallet.worker format.
+-    `--password`: matches `%password%` field, by default its x.
 -    `--api-port`: matches API PORT config variable if miner has support for api, or else just ignores it.
 
 **Disclaimer!!!**  
