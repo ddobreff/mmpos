@@ -1,0 +1,90 @@
+#!/usr/bin/env bash
+
+EXEC="./my-custom-miner"
+CONF_FILE="mmp-external.conf"
+
+ARGS=("$@")
+FINAL_ARGS=()
+
+POOL_VAL=""
+USER_VAL=""
+PASS_VAL=""
+ALGO_VAL=""
+API_PORT=4444
+
+# ---------------- PARSE GENERIC ARGS ----------------
+i=0
+while [[ $i -lt ${#ARGS[@]} ]]; do
+    case "${ARGS[$i]}" in
+	# Mandatory - if unused place dummy mapper without result in final CMD
+        --pool)
+            POOL_VAL="${ARGS[$((i+1))]}"
+            ((i+=2))
+            ;;
+        # Mandatory - if unused place dummy mapper without result in final CMD
+        --user)
+            USER_VAL="${ARGS[$((i+1))]}"
+            ((i+=2))
+            ;;
+        # Mandatory - if unused place dummy mapper without result in final CMD
+        --password)
+            PASS_VAL="${ARGS[$((i+1))]}"
+            ((i+=2))
+            ;;
+        # Optional - map only if miner supports algo or coin command
+        --algo)
+            ALGO_VAL="${ARGS[$((i+1))]}"
+            ((i+=2))
+            ;;
+        # Optional - map only if miner supports API, else parse logfile.
+        --api-port)
+            API_PORT="${ARGS[$((i+1))]}"
+            ((i+=2))
+            ;;
+        *)
+            FINAL_ARGS+=("${ARGS[$i]}")
+            ((i+=1))
+            ;;
+    esac
+done
+
+# ---------------- DEFAULTS ----------------
+[[ -z "$ALGO_VAL" ]] && ALGO_VAL="xnt"
+[[ -z "$API_PORT" || "$API_PORT" == "0" ]] && API_PORT=4444
+
+# ---------------- PERSIST API PORT ----------------
+if grep -q '^CUSTOM_API_PORT=' "$CONF_FILE" 2>/dev/null; then
+    sed -i "s/^CUSTOM_API_PORT=.*/CUSTOM_API_PORT=$API_PORT/" "$CONF_FILE"
+else
+    echo "CUSTOM_API_PORT=$API_PORT" >> "$CONF_FILE"
+fi
+
+# ---------------- SPLIT WALLET and WORKER ----------------
+# Use this only if you provide separate args for wallet and worker
+#if [[ "$USER_VAL" == *.* ]]; then
+#    WALLET_ADDRESS="${USER_VAL%%.*}"
+#    WALLET_WORKER="${USER_VAL#*.}"
+#else
+#    WALLET_ADDRESS="$USER_VAL"
+#    WALLET_WORKER="$(hostname)"
+#fi
+# 
+#CMD+=( --wallet "$WALLET_ADDRESS" )
+#CMD+=( --worker "$WALLET_WORKER" )
+
+# ---------------- BUILD MINER CMD ----------------
+CMD=( "$EXEC" )
+
+[[ -n "$ALGO_VAL" ]]  && CMD+=( --algo "$ALGO_VAL" ) # Change --algo here with actual miner algo/coin selection argument
+[[ -n "$POOL_VAL" ]]  && CMD+=( --pool "$POOL_VAL" ) # Change --pool here with actual miner pool selection argument
+[[ -n "$USER_VAL" ]]  && CMD+=( --user "$USER_VAL" ) # Change --user with actual miner user/wallet selection argument
+[[ -n "$PASS_VAL" ]]  && CMD+=( --pass "$PASS_VAL" ) # Change --pass with actual miner password selection argument
+
+CMD+=( --api-port "$API_PORT" )
+
+# Append any remaining unknown arguments as-is
+CMD+=( "${FINAL_ARGS[@]}" )
+
+# ---------------- RUN ----------------
+echo "Running: ${CMD[*]}"
+exec "${CMD[@]}"

@@ -4,7 +4,8 @@ You can make any executable as custom miner in mmpOS.
 All miners are unarchived in directory `/opt/mmp/miners/custom-$(echo -n "your-download-url/miner.tar.gz" | sha256sum | cut -c1-5)`
 
 ## Table of Contents
-1. [mmp-external.conf](#mmp-externalconf)
+1. [mmp-launch.sh](#mmp-launchsh)
+    - [Default arguments of mmp-launch.sh](#default-arguments-of-mmp-launchsh)
 2. [mmp-stats.sh](#mmp-statssh)
     - [How to get PCI Bus id in mmpOS?](#how-to-get-pci-bus-id-in-mmpos)
     - [Example GPU json output](#example-gpu-json-output)
@@ -12,12 +13,25 @@ All miners are unarchived in directory `/opt/mmp/miners/custom-$(echo -n "your-d
     - [Example FPGA json output](#example-fpga-json-output)
     - [Per device share monitoring](#per-device-share-monitoring)
     - [Example mmp-stats.sh files](#example-mmp-statssh-files)
-3. [How to pack your custom miner](#how-to-pack-your-custom-miner)
-4. [How to use your custom miner](#how-to-use-your-custom-miner)
-5. [Final step after successful setup of your custom miner](#final-step-after-successful-setup-of-your-custom-miner)
+3. [mmp-external.conf](#mmp-externalconf)
+4. [How to pack your custom miner](#how-to-pack-your-custom-miner)
+5. [How to use your custom miner](#how-to-use-your-custom-miner)
+6. [Final step after successful setup of your custom miner](#final-step-after-successful-setup-of-your-custom-miner)
 
 ---
+##### mmp-launch.sh
+Initial miner launcher script with default arguments supplied by our UI for simplicity on first boot. 
 
+**Default arguments supplied:**  
+-    `--pool`: matches %pool_server%:%pool_port% of stratum pool, doesn't include stratum+tcp|stratum+ssl - make sure to map those internally in launch script.
+-    `--user`: matches %user% placeholder that contains by default %wallet_address%.%rig_name%%miner_id% or simple wallet.worker format.
+-    `--password`: matches %password% field, by default its x.
+-    `--api-port`: matches API PORT config variable if miner has support for api, or else just ignores it.
+
+**Disclaimer!!!**  
+-       If your miner supports `--algo` or `--coin` parameter, make sure to pass default in `mmp-launch.sh` because by default we don't provide algo option, you can of course map it for further usage.
+-       Each additional argument should be passed ASIS for futher usage.
+-       Example [mmp-launch.sh](/custom_miner/mmp-launch.txt)
 ##### mmp-external.conf
 This file is considered generic for storing miner name and version.  
 It is used entirely for your information purpose, we do not display anything it contains.  
