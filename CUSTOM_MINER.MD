@@ -23,13 +23,15 @@ All miners are unarchived in directory `/opt/mmp/miners/custom-$(echo -n "your-d
 Initial miner launcher script with default arguments supplied by our UI for simplicity on first boot. 
 
 #### Default arguments of mmp-launch.sh
+-    `--coin`: matches `%coin%` placeholder which you should map in script to specific algorithm this coin supports.
 -    `--pool`: matches `%pool_server%:%pool_port%` of stratum pool, doesn't include `stratum+tcp|stratum+ssl` - make sure to map those internally in launch script.
 -    `--user`: matches `%user%` placeholder that contains by default `%wallet_address%.%rig_name%%miner_id%` or simple wallet.worker format.
 -    `--password`: matches `%password%` field, by default its x.
 -    `--api-port`: matches API PORT config variable if miner has support for api, or else just ignores it.
 
 **Disclaimer!!!**  
--	If your miner supports `--algo` or `--coin` parameter, make sure to pass default in `mmp-launch.sh` because by default we don't provide algo option, you can of course map it for further usage.
+-	Coin / Algorithm Mapping:** If your miner relies on specific algorithm tokens (e.g., `--algorithm pearlhash`), use the `--coin` parameter to drive an internal mapping block.
+-	Fallback Behavior:** If an unknown or unmapped coin token is passed via `--coin`, the script is designed to safely discard the coin/algorithm arguments entirely, allowing the miner binary to fall back to its own internal defaults or other user-defined parameters without breaking.
 -	Each additional argument should be passed ASIS for futher usage.
 -	Example: [mmp-launch.sh](/custom_miner/mmp-launch.txt)
 ##### mmp-external.conf
