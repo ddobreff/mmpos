@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # --- DEFAULT CMD ARGUMENTS FOR CUSTOM MINERS ---
-# ./mmp-launch.sh --coin %coin% --pool %pool_server%:%pool_port% --user %user% --password %password% --api-port %api_port%
+# ./mmp-launch.sh --coin %coin% %pool_protocol% --pool %pool_server%:%pool_port% --user %user% --password %password% --api-port %api_port%
 # --- END DEFAULT CMD ARGUMENTS ---
 EXEC="./my-custom-miner"
 CONF_FILE="mmp-external.conf"
@@ -24,6 +24,7 @@ ARGS=("$@")
 FINAL_ARGS=()
 
 POOL_VAL=""
+PROTO_VAL=""
 USER_VAL=""
 PASS_VAL=""
 COIN_VAL=""
@@ -53,8 +54,14 @@ while [[ $i -lt ${#ARGS[@]} ]]; do
             ((i+=2))
             ;;
         *)
-            FINAL_ARGS+=("${ARGS[$i]}")
-            ((i+=1))
+            # Intercept raw 'tcp' or 'tls' values since they don't have an associated --flag
+            if [[ "${ARGS[$i]}" == "tcp" || "${ARGS[$i]}" == "tls" ]]; then
+                PROTO_VAL="${ARGS[$i]}"
+                ((i+=1))
+            else
+                FINAL_ARGS+=("${ARGS[$i]}")
+                ((i+=1))
+            fi
             ;;
     esac
 done
@@ -67,6 +74,15 @@ if grep -q '^CUSTOM_API_PORT=' "$CONF_FILE" 2>/dev/null; then
     sed -i "s/^CUSTOM_API_PORT=.*/CUSTOM_API_PORT=$API_PORT/" "$CONF_FILE"
 else
     echo "CUSTOM_API_PORT=$API_PORT" >> "$CONF_FILE"
+fi
+
+# ---------------- POOL PROTOCOL FORMATTING ----------------
+if [[ -n "$POOL_VAL" && -n "$PROTO_VAL" ]]; then
+    if [[ "$PROTO_VAL" == "tls" ]]; then
+        POOL_VAL="stratum+ssl://${POOL_VAL}"
+    else
+        POOL_VAL="stratum+tcp://${POOL_VAL}"
+    fi
 fi
 
 # ---------------- SPLIT WALLET AND WORKER LOGIC ----------------

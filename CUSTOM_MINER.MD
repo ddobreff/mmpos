@@ -24,6 +24,7 @@ Initial miner launcher script with default arguments supplied by our UI for simp
 
 #### Default arguments of mmp-launch.sh
 -    `--coin`: matches `%coin%` placeholder which you should map in script to specific algorithm this coin supports.
+-    `%pool_protocol% placeholder that matches `tcp` or `tls` for pools, make sure to map it in `mmp-launch.sh` as supported pool protocol.
 -    `--pool`: matches `%pool_server%:%pool_port%` of stratum pool, doesn't include `stratum+tcp|stratum+ssl` - make sure to map those internally in launch script.
 -    `--user`: matches `%user%` placeholder that contains by default `%wallet_address%.%rig_name%%miner_id%` or simple wallet.worker format.
 -    `--password`: matches `%password%` field, by default its x.
@@ -31,6 +32,7 @@ Initial miner launcher script with default arguments supplied by our UI for simp
 
 **Disclaimer!!!**  
 -	**Coin / Algorithm Mapping:** If your miner relies on specific algorithm tokens (e.g., `--algorithm pearlhash`), use the `--coin` parameter to drive an internal mapping block.
+-       **%pool_protocol%** you should map internall tcp or tls, if ssl is flipped on pool, %pool_protocol% is set to `tls`, make sure to map it to your supported protocol ex. `stratum+ssl://`.
 -	**Fallback Behavior:** If an unknown or unmapped coin token is passed via `--coin`, the script is designed to safely discard the coin/algorithm arguments entirely, allowing the miner binary to fall back to its own internal defaults or other user-defined parameters without breaking.
 -	Each additional argument should be passed ASIS for futher usage.
 -	Example: [mmp-launch.sh](/custom_miner/mmp-launch.txt)
